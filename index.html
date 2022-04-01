@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Open Weather Weather Dashboard</title>
+</head>
+
+<body>
+    
+    <div class="flex-column min-100-vh">
+        <header class="hero">
+            <!--fix this-->
+            <h2>Weather Dashboard</h2>
+        </header>
+        <main>    
+            <div class="flex-row justify-space-between">
+                <div class = "col-4">
+                    <h3 class="card-header text-uppercase">Search for a City:</h3>
+                    <form id="input-form" class="card-body">
+                        <input name="searchCity" id="searchCity" type="text" autofocus="true" class="form-input" />
+                        <button type="submit" class="btn">Search</button>
+                    </form>
+                </div>
+                
+                <div id="previous" class="previous-searches">
+                </div>
+            
+                <!--container for current weather display and 5 day forecast-->
+                <div class="col-8">
+                    <div class ="current conditions">
+                        <textarea class="display-current"><span id="current">
+                            <h2></h2><br>
+                            <p></p><br>
+                            <p></p><br>
+                            <p></p><br>
+                        </span></textarea>
+                    </div>
+                    <div class="future-forecast" id="forecast-container" class="list-group">
+                        <div class="row">
+                            <h3 class="futureForecast">5-Day Forecast: <span id="forecast"></span></h3>
+                            <div id="forecast-container" class="list-group">
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+        </main>   
+    </div>
+  
+    <script src="./assets/js/homepage.js"></script>
+</body>
+
+</html>
