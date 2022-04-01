@@ -1,7 +1,7 @@
 :root {
     --primary: #ffffff;
-    --secondary: navy;
-    --tertiary: aqua;
+    --secondary: rgb(42, 85, 171);
+    --tertiary: rgba(95, 130, 194, 0.714);
     --dark: black;
     --light-dark: gray;
     }
@@ -86,7 +86,7 @@
     }
   
   .hero {
-    padding: 3% 4%;
+    padding: 2% 2%;
     margin: 20px;
     background-color: var(--secondary);
     color: var(--primary);
@@ -150,10 +150,8 @@
     padding: 2.5%;
   }
   
-  /* FORM */
-  .form-label,
-  .form-input,
-  .form-textarea {
+  /* Input space */
+  .form-input {
     display: block;
   }
   
@@ -163,8 +161,20 @@
     margin: 5px 0 10px;
     font-size: 1.2rem;
     border: 2px solid var(--light-dark);
-    border-radius: var(--border-radius);
+    border-radius: var(--secondary);
   }
+  
+  .current-conditions, .future-forecast {
+    height: 400px;
+    display: flex;
+  }
+
+  .display-current {
+    height: 50%;
+    margin: 10px;
+    text-align: left;
+  }
+
   
   /* HEIGHT / WIDTH UTILS */
   .min-100-vh {

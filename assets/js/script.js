@@ -23,7 +23,7 @@ var formSubmitHandler = function(event) {
 
 var getCityForecast = function(searchCity) {
   // format the open weather api url
-  var apiUrl = "";
+  var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid=9dea78eebfbe4a83335e9217f42409a6"
  
   // make a request to the url
   fetch(apiUrl).then(function(response) {
@@ -43,22 +43,22 @@ var getCityForecast = function(searchCity) {
   });
 };
 
-                var getFeaturedRepos = function(language) {
-                    // format the github api url
-                    var apiUrl = "https://api.github.com/search/repositories?q=" + language + "+is:featured&sort=help-wanted-issues";
+                // var getPastSearches = function(PastSearches) {
+                //     // format the github api url
+                //     //localStorageget
                 
-                    // make a get request to url
-                    fetch(apiUrl).then(function(response) {
-                    // request was successful
-                    if (response.ok) {
-                        response.json().then(function(data) {
-                        displayRepos(data.items, language);
-                        });
-                    } else {
-                        alert("Error: " + response.statusText);
-                    }
-                    });
-                };
+                //     // make a get request to url
+                //     fetch(apiUrl).then(function(response) {
+                //     // request was successful
+                //     if (response.ok) {
+                //         response.json().then(function(data) {
+                //         (data.items, language);
+                //         });
+                //     } else {
+                //         alert("Error: " + response.statusText);
+                //     }
+                //     });
+                // };
 
 
 
@@ -108,4 +108,4 @@ var displayForecast = function(cityForecast, citySearchTerm) {
 };
 
 // add event listeners to forms
-userFormEl.addEventListener("submit", formSubmitHandler);
+inputFormEl.addEventListener("submit", formSubmitHandler);
