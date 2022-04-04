@@ -1,27 +1,47 @@
-var inputFormEl = document.querySelector("#input-form");
-var searchCityEl = document.querySelector("#searchCity");
+// functions required to meet acceptance criteria
+//    function to retrieve information on click of search button to inputForm
+//       function to store that name into localStorage and display up to 10 previous searches
+//                   when button for one of the previous searches is clicked, current/future forecast as of that point in time comes up  
+//    function to display current weather for the searchCity
+//        display -> city name, date, icon representing weather conditions, humidity, windspeed and UV index
+//                   the UV index should assume class of favourable, moderate or severe
+//    function to display next 5 days weather for that city
+//        display -> future forecast comprised of 5 list items distributed horizonally in a flex-row
+//                   each item should display an icon reflecting current conditions, temperature, windspeed and humidity
+
+var inputLocationEl = document.querySelector("#input-form");
+var historyButtonsEl = document.querySelector("#history");
+var searchLocationEl = document.querySelector("#search-location");
 var forecastContainerEl = document.querySelector("#forecast-container");
-var forecast = document.querySelector("#forecast");
+var locationSearchTerm = document.querySelector("#future");
+var forecast = document.querySelector("#forecast-to-come");
 
 
-var formSubmitHandler = function(event) {
-  event.preventDefault();
+// create function to fetch required data from API (click event to search, fetch from APL and function to display information requested)
+
+// enter name of location for which weather is being requested
+var inputRequestHandler = function(event) {
+event.preventDefault();
   
   // get value from input element
-  var searchCity = searchCityEl.value.trim();
+  var searchLocation = searchLocationEl.value.trim();
   
-  if (searchCity) {
-    getCityForecast(searchCity);
+  // if information has been entered into input field, proceed to fetch data
+  if (searchLocation) {
+    getLocationForecast(searchLocation);
 
     // clear old content
     forecastContainerEl.textContent = "";
-    searchCityEl.value = "";
+    searchLocationEl.value = "";
+  
+  // if nothing entered, require input
   } else {
-    alert("City Name");
+    alert("Please input a city name");
   }
 };
 
-var getCityForecast = function(searchCity) {
+// function to call API
+var getLocationForecast = function(searchLocation) {
   // format the open weather api url
   var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid=9dea78eebfbe4a83335e9217f42409a6"
  
@@ -32,80 +52,68 @@ var getCityForecast = function(searchCity) {
       console.log(response);
       response.json().then(function(data) {
         console.log(data);
-        displayForecast(data, searchCity);
+        displayForecast(data, searchLocation);
   });
-  } else {
-    alert("Error: " + response.statusText);
+  } else {  // if no location by the name that was input
+    alert("Error: that location is not in our database" );
   }
   })
   .catch(function(error) {
-    alert("Unable to access dashboard");
+    alert("Unable to access weather dashboard");
   });
 };
 
-                // var getPastSearches = function(PastSearches) {
-                //     // format the github api url
-                //     //localStorageget
-                
-                //     // make a get request to url
-                //     fetch(apiUrl).then(function(response) {
-                //     // request was successful
-                //     if (response.ok) {
-                //         response.json().then(function(data) {
-                //         (data.items, language);
-                //         });
-                //     } else {
-                //         alert("Error: " + response.statusText);
-                //     }
-                //     });
-                // };
+// display information retrieved from API call related to current  
 
-
-
-var displayForecast = function(cityForecast, citySearchTerm) {
-  // check if api returned the city entered
-  if (cityForecast.length === 0) {
+var displayForecast = function(locationForecast, forecastDisplay) {
+  // check if api returned any information
+  if (locationForecast.length === 0) {
     forecastContainerEl.textContent = "There is no information available for that location.";
     return;
   }
-  
-  citySearch.textContent = citySearchTerm;
+  // check format - create div for display and list elements?
+  locationSearchTerm.textContent = forecastDisplay;
 
-  // loop over cities
-  for (var i = 0; i < cityForecast.length; i++) {
-    // format fixt this
-    var forecastLocation = cityForecast[i] + "/" + cityForecast[i].name;
+  // display 5 day forecast here? - need to create list and append to container
+  for (var i = 0; i < locationForecast.length; i++) {
+    // format fix this
+    var forecastLocation = locationForecast[i] + "/" + locationForecast[i].name;
 
     // create a container for the 5 day forecast 
-    var citySearchEl = document.createElement("div");
-    citySearchEl.classList = "list-item flex-row justify-space-between align-center";
+    var locationFutureListingEl = document.createElement("div");
+    locationFutureListingEl.classList = "list-item flex-row justify-space-between align-center";
 
     // create a span element to hold forecast details
-    var titleEl = document.createElement("span");
-    titleEl.textContent = forecastLocation;
+    var fiveDayForecastEl = document.createElement("span");
+    fiveDayForecastEl.textContent = forecastLocation;
 
     // append to container
-    citySearchEl.appendChild(titleEl);
+    locationSearchEl.appendChild(fiveDayForecastEl);
 
     // create a status element
     var statusEl = document.createElement("span");
     statusEl.classList = "flex-row align-center";
+  };
+// need if/else statements to check and display icon for current weather conditions (fontawesome)
+    //  if (locationForecast.weatherCondition ===  0) {
+    //    statusEl.innerHTML =
+    //      "<i class='fas fa-times status-icon icon-danger'></i>" + locationSearch[i].weatherCondition;
+    //  } else {
+    //    statusEl.innerHTML = "<i class='fas fa-check-square status-icon icon-success'></i>";
+    //  }
 
-    // check if current xxxxxxxxxxxxxxxxxxxxxxxxx
-    if (cityForecast[i].open_issues_count > 0) {
-      statusEl.innerHTML =
-        "<i class='fas fa-times status-icon icon-danger'></i>" + citySearch[i].open_issues_count + " issue(s)";
-    } else {
-      statusEl.innerHTML = "<i class='fas fa-check-square status-icon icon-success'></i>";
-    }
+    // // append to container
+    // citySearchEl.appendChild(statusEl);
 
-    // append to container
-    citySearchEl.appendChild(statusEl);
-
-    // append container to the dom
-    forecastContainerEl.appendChild(citySearchEl);
+//     // append container to the dom
+    // forecastContainerEl.appendChild(locationSearchEl);
   }
-};
+
+ // function to move past search locations into prev-btns 
+ var getPastSearches = function(PastSearches) {
+   // get information from local storage
+
+ };
 
 // add event listeners to forms
-inputFormEl.addEventListener("submit", formSubmitHandler);
+inputLocationEl.addEventListener("submit", inputRequestHandler);
