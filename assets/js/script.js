@@ -10,29 +10,44 @@
 //                   each item should display an icon reflecting current conditions, temperature, windspeed and humidity
 
 var inputLocationEl = document.querySelector("#input-form");
-var historyButtonsEl = document.querySelector("#history");
 var searchLocationEl = document.querySelector("#search-location");
-var forecastContainerEl = document.querySelector("#forecast-container");
-var locationSearchTerm = document.querySelector("#future");
+var historyButtonsEl = document.querySelector("#history");
+var currentContainerEl = document.querySelector("#current-container");
+var futureContainerEl = document.querySelector("#future-container");
+var locationSearchTermEl = document.querySelector("#future");
 var forecast = document.querySelector("#forecast-to-come");
 
+var currentDate = null;
+var date = null;
+
+var dateDisplay = function () {
+  date = moment(new Date())
+  currentDate.html(date.format('DD MMMM YYYY, HH:mm:ss'));
+};
 
 // create function to fetch required data from API (click event to search, fetch from APL and function to display information requested)
 
 // enter name of location for which weather is being requested
 var inputRequestHandler = function(event) {
 event.preventDefault();
+console.log(event);
   
   // get value from input element
   var searchLocation = searchLocationEl.value.trim();
+  const previousSearches = JSON.parse(localStorage.previousSearches || '[]');  
   
-  // if information has been entered into input field, proceed to fetch data
+  // save locations in local storage in an array for future callback
+  previousSearches.push(searchLocation);
+  localStorage.setItem("previousSearches", JSON.stringify(previousSearches));
+
+  // if information has been entered into input field, proceed to retrieve data
   if (searchLocation) {
     getLocationForecast(searchLocation);
 
-    // clear old content
+  
+  // clear old content
     forecastContainerEl.textContent = "";
-    searchLocationEl.value = "";
+    locationSearchTermEl.value = "";
   
   // if nothing entered, require input
   } else {
@@ -42,7 +57,7 @@ event.preventDefault();
 
 // function to call API
 var getLocationForecast = function(searchLocation) {
-  // format the open weather api url
+  // format the open weather api url (do I need to )
   var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid=9dea78eebfbe4a83335e9217f42409a6"
  
   // make a request to the url
@@ -53,6 +68,7 @@ var getLocationForecast = function(searchLocation) {
       response.json().then(function(data) {
         console.log(data);
         displayForecast(data, searchLocation);
+         
   });
   } else {  // if no location by the name that was input
     alert("Error: that location is not in our database" );
@@ -63,10 +79,16 @@ var getLocationForecast = function(searchLocation) {
   });
 };
 
+// set current date for display in current section (unless included in API call)
+var moment = moment().format('MM/DD/YYYY');
+console.log(moment);
+
 // display information retrieved from API call related to current  
 
 var displayForecast = function(locationForecast, forecastDisplay) {
   // check if api returned any information
+  console.log(locationForecast);
+  console.log(forecastDisplay);
   if (locationForecast.length === 0) {
     forecastContainerEl.textContent = "There is no information available for that location.";
     return;
@@ -103,7 +125,7 @@ var displayForecast = function(locationForecast, forecastDisplay) {
     //  }
 
     // // append to container
-    // citySearchEl.appendChild(statusEl);
+    // locationSearchEl.appendChild(statusEl);
 
 //     // append container to the dom
     // forecastContainerEl.appendChild(locationSearchEl);
@@ -111,8 +133,18 @@ var displayForecast = function(locationForecast, forecastDisplay) {
 
  // function to move past search locations into prev-btns 
  var getPastSearches = function(PastSearches) {
-   // get information from local storage
+   var previous = JSON.parse(window.localStorage.getItem("previousSearches"));
+   
+   // allocate up to 10 previous searches from local storage to list below Input Form
+   if(previous) {
+     for (var i = 0; i < previous.length; i++) {
+       var previousLocation = previous[i];
+       var previousContainerElId = previousLocation.previousContainerEl;
+       var previousLocationHTMLEl = document.getElementById(previousContainerElId);
+       previousLocationHTMLEl.innerText = previousLocation;
 
+     }
+   }
  };
 
 // add event listeners to forms

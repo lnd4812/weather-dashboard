@@ -10,14 +10,14 @@
   <title>Open Weather Weather Dashboard</title>
 </head>
 
-<body>
+<body class="flex-column min-100-vh">
     
     <header class="hero">
         <h2>Weather Dashboard</h2>
     </header>
-    <main>    
-        <!-- <div class="flex-row justify-space-between"> -->
-            <div id="search-side" class="search-container col-4">
+    <main class="flex-row justify-space-between">    
+        <div class="col-12 col-md-4 locations-side">
+            <div id="search-side" class="search-container">
                 <h3 class="card-header text-uppercase">Search for a City:</h3>
                 <form id="input-form" class="card-body">
                     <input name="search-location" id="search-location" type="text" autofocus="true" class="form-input"/>
@@ -25,53 +25,32 @@
                 </form>
                 <div id="previous" class="previous-searches">
                     <h4 class="card-header text-uppercase">Search History</h4>
-                    <div id="history" class="card-body">
-                        <ul>
+                    <div class="card-body">
+                        <div id="history" class="list-group in-the-past"><span id="previous-search-history"></span>
                             <button type="submit" class="btn prev-btn">name of previous city</button>
-                            <button type="submit" class="btn">name of previous city</button>
-                            <button type="submit" class="btn">name of previous city</button>
-                            <button type="submit" class="btn">name of previous city</button>
-                            <button type="submit" class="btn">name of previous city</button>
-                            <button type="submit" class="btn">name of previous city</button>
-                            <button type="submit" class="btn">name of previous city</button>
-                            <button type="submit" class="btn">name of previous city</button>
-                            <button type="submit" class="btn">name of previous city</button>
-                            <button type="submit" class="btn">name of previous city</button>
-                        </ul>    
+                        </div>    
                     </div><!--card-body/search-history-->
                 </div><!--previous searches-->
             </div><!--search-container-->
-            <!--container for current weather display and 5 day forecast-->
-            <div id="weather" class="information-side">
-                <div class ="current-conditions">
-                    <textarea class="list-group display-current">
-                        <h2 id="location-current">City (dd/mm/yyyy)</h2><br>
-                        <p id="current-temp">Temp: temp</p><br>
-                        <p id="current-wind">Wind: x MPH</p><br>
-                        <p id="current-humidity">Humidity: x%</p><br>
-                        <P id="current-uv">UV Index: x%</P>
-                   </textarea>
-                </div><!--current-conditions-->
-                <div class="future-forecast col-8">
-                    <h3 class="five-day-forecast">5-Day Forecast:</h3>
-                        <div class="row" id="forecast-container">
-                            <div class="list-group" id="forecast-to-come">
-                                <ul>                                
-                                    <span id="future"></span> 
-                                    <li class="list-item"><div class="day-1" id="1"></div></li>
-                                    <li class="list-item"><div class="day-2" id="2"></div></li> 
-                                    <li class="list-item"><div class="day-3" id="3"></div></li>   
-                                    <li class="list-item"><div class="day-4" id="4"></div></li>
-                                    <li class="list-item"><div class="day-5" id="5"></div></li>
-                                </ul>       
-                            </div>     
-                        </div>
-                    </div><!--forecast-container-->
-                </div><!--future-forecast-->
-            </div><!--information-side-->
-        </div><!--flex-row-justify-space-between-->    
-    </main>   
-
+        </div><!--locations-side-->
+        <!--container for current weather display and 5 day forecast-->
+        <div id="weather" class="col-12 col-md-8 information-side">
+            <div class="current-part">
+                <h2><span id="location-current"></span><span id="date-current"></span></h2><br>
+                <div id="current-container" class="list-group display-current">
+                    <span id="current-conditions"></span>
+                </div><!--current-container-->
+            </div><!--current-part-->    
+            <div class="future-part">
+                <h3>5-Day Forecast:</h3>
+                <div id="future-container" class="list-group display-future">
+                    <span id="future"></span> 
+                </div><!--future-container-->
+            </div><!--future-part-->
+        </div><!--information-side-->
+    </main><!--flex-row-justify-space-between-->    
+       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 
