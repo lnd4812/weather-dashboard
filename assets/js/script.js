@@ -66,6 +66,29 @@ var getLocationForecast = function (searchLocation) {
           // retrieve the onecall data sets
           fetch(oneCallApiUrl).then(function (response) {
             if (response.ok) {
+             
+            // add Location and Date for current weather display
+           
+            var currentPartEl = document.createElement("div");
+            currentPartEl.className = "current-part";
+
+            // set current date for display in current section 
+            var locationCurrent = searchLocation;
+            console.log(locationCurrent);
+            
+            var dateCurrent = "(" + moment().format("MM/DD/YYYY") + ")";
+            console.log(dateCurrent);
+
+            // create h2 elements to hold information
+            var currentInfoEl = document.createElement("h2");  
+            currentInfoEl.innerHTML = "<h2 class='current-location text-uppercase'>" + locationCurrent + ", " + dateCurrent + "</h2>";
+            
+            currentPartEl.appendChild(currentInfoEl);
+            currentContainerEl.appendChild(currentPartEl);
+
+
+                        
+             
               response.json().then(function (oneCallApiData) {
               // console.log(oneCallApiData);
                 // call functions to display the current and future forecasts
@@ -86,9 +109,7 @@ var getLocationForecast = function (searchLocation) {
     });
  };
 
-// set current date for display in current section (unless included in API call)
-var dateCurrentEl = "(" + moment().format("MM/DD/YYYY") + ")";
-console.log(dateCurrentEl);
+
 
 // display information retrieved from API call related to current
 var displayCurrentForecast = function (currentForecastData) {  
@@ -99,15 +120,7 @@ var currentHumidity = currentForecastData.humidity;
 var currentUVIndex = currentForecastData.uvi;
 console.log(currentTemp, currentWind, currentHumidity, currentUVIndex);
 }
-// var locationEl = document.createElement("h2");
 
-var locationCurrentEl = document.createElement("span");
-locationCurrentEl.textContent = 
-console.log(searchLocationel)
-
-// locationEl.append(locationCurrentEl);
-// // append to container
-// currentContainerEl.appendChild(locationEl);
 
 
 

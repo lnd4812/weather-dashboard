@@ -34,20 +34,14 @@
             </div><!--search-container-->
         </div><!--locations-side-->
         <!--container for current weather display and 5 day forecast-->
-        <div id="weather" class="col-12 col-md-8 information-side">
-            <div class="current-part">
-                <div id="current-container" class="list-group display-current">
-                    <h2 class="text-uppercase"><span id="location-current"></span><span id="date-current"></span></h2><br> 
-                    <!-- <span id="current-conditions"></span> -->
-                </div><!--current-container-->
-            </div><!--current-part-->    
-            <div class="future-part">
-                <h3>5-Day Forecast:</h3>
-                <div id="future-container" class="list-group display-future">
-                    <!-- <span id="future-conditions"></span>  -->
-                </div><!--future-container-->
-            </div><!--future-part-->
-        </div><!--information-side-->
+        <div id="current-container" class="col-12 col-md-8 information-side">
+            <h2 class="current-location text-uppercase"><span id="location-current"></span><span id="date-current"></span></h2><br> 
+            <div id="current-details" class="list-group display-current"></div>
+            </div><!--current-container-->
+        </div><!--current-part-->    
+        <div id="future-container" class="list-group display-future">
+            <h3>5-Day Forecast:</h3>
+        </div><!--future-container-->
     </main><!--flex-row-justify-space-between-->    
        
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
