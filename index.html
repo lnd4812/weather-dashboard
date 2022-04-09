@@ -34,14 +34,27 @@
             </div><!--search-container-->
         </div><!--locations-side-->
         <!--container for current weather display and 5 day forecast-->
-        <div id="current-container" class="col-12 col-md-8 information-side">
-            <h2 class="current-location text-uppercase"><span id="location-current"></span><span id="date-current"></span></h2><br> 
-            <div id="current-details" class="list-group display-current"></div>
-            </div><!--current-container-->
-        </div><!--current-part-->    
-        <div id="future-container" class="list-group display-future">
-            <h3>5-Day Forecast:</h3>
-        </div><!--future-container-->
+        
+        <div  class="col-12 col-md-8 info-top">
+            <div id="current-part">
+                <div class="weather-icon"><img src="icons/unknown.png" /></div> 
+                <div id="current-details">
+                    <h3 id="current-location" class="text-uppercase"><span id="location-current"></span><span id="date-current"></span></h3>
+                </div>
+                <div id="current-container" class="col-12 col-md-8 stats">
+                    <div id="statistics"></div>
+                    <p id="temp"><span id="temp-current"></span></p>
+                    <p id="wind"><span id="wind-current"></span></p>
+                    <p id="humidity"><span id="humidity-current"></span></p>
+                    <p id="uvi"><span id="uvi-current"></span></p>
+                </div><!--current-container-->
+            </div><!--current-part-->
+            <div id="future-part">
+                <div id="future-container" class="list-group display-future">
+                    <h3>5-Day Forecast:</h3>
+                </div><!--future-container-->
+            </div>
+        </div>
     </main><!--flex-row-justify-space-between-->    
        
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

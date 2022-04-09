@@ -10,9 +10,22 @@
 var inputLocationEl = document.querySelector("#input-form");
 var searchLocationEl = document.querySelector("#search-location");
 var historyButtonsEl = document.querySelector("#history");
-var currentContainerEl = document.querySelector("#current-container");
+
+var currentDetailsEl = document.querySelector("#current-details");
+var currentLocationEl = document.querySelector("#current-location")
 var locationCurrentEl = document.querySelector("#location-current");
 var dateCurrentEl = document.querySelector("#date-current");
+var currentContainerEl = document.querySelector("#current-container");
+var statisticsEl = document.querySelector("#statistics");
+var tempCurrentEl = document.querySelector("#temp-current");
+var tempEl = document.querySelector("#temp");
+var windCurrentEl = document.querySelector("#wind-current");
+var windEl = document.querySelector("#wind");
+var humidityCurrentEl = document.querySelector("#humidity-current");
+var humidityEl = document.querySelector("#humidity");
+var uviCurrentEl = document.querySelector("#uvi-current");
+var uviEl = document.querySelector("#uvi");
+var weatherIconEl = document.querySelector(".weather-icon");
 var futureContainerEl = document.querySelector("#future-container");
 
 // create function to fetch required data from API (click event to search, fetch from APL and function to display information requested)
@@ -33,7 +46,8 @@ var inputRequestHandler = function(event) {
   // if information has been entered into input field, proceed to retrieve data
   if (searchLocation) {
     getLocationForecast(searchLocation);
-    
+
+
     // if nothing entered, require input
   } else {
     alert("Please input a city name");
@@ -69,32 +83,12 @@ var getLocationForecast = function (searchLocation) {
              
             // add Location and Date for current weather display
            
-            var currentPartEl = document.createElement("div");
-            currentPartEl.className = "current-part";
-
-            // set current date for display in current section 
-            var locationCurrent = searchLocation;
-            console.log(locationCurrent);
             
-            var dateCurrent = "(" + moment().format("MM/DD/YYYY") + ")";
-            console.log(dateCurrent);
-
-            // create h2 elements to hold information
-            var currentInfoEl = document.createElement("h2");  
-            currentInfoEl.innerHTML = "<h2 class='current-location text-uppercase'>" + locationCurrent + ", " + dateCurrent + "</h2>";
-            
-            currentPartEl.appendChild(currentInfoEl);
-            currentContainerEl.appendChild(currentPartEl);
-
-
-                        
-             
-              response.json().then(function (oneCallApiData) {
-              // console.log(oneCallApiData);
-                // call functions to display the current and future forecasts
-                displayCurrentForecast(oneCallApiData.current);
-                // displayFiveDayForecast(oneCallApiData.daily);  
-                              
+            response.json().then(function (oneCallApiData) {
+            console.log(oneCallApiData);
+              // call functions to display the current and future forecasts
+              displayCurrentForecast(oneCallApiData.current);
+              // displayFiveDayForecast(oneCallApiData.daily);  
               });
             }
           });
@@ -114,15 +108,57 @@ var getLocationForecast = function (searchLocation) {
 // display information retrieved from API call related to current
 var displayCurrentForecast = function (currentForecastData) {  
 // 
+var currentPartEl = document.createElement("div");
+currentPartEl.className = "current-part";
+
+// set current date for display in current section 
+var locationCurrent = searchLocation;
+console.log(locationCurrent);
+
+var dateCurrent = "(" + moment().format("MM/DD/YYYY") + ")";
+console.log(dateCurrent);
+
+var currentIcon = currentForecastData.icon; 
+
+// create h2 elements to hold information
+var currentInfoEl = document.createElement("h3");  
+currentInfoEl.innerHTML = "<h3 class='current-location text-uppercase'>" + locationCurrent + " " + dateCurrent + "</h3>";
+
+// append location/date/icon to div h3 tags
+currentLocationEl.appendChild(currentInfoEl);
+// append h3 tag contents to div
+currentDetailsEl.appendChild(currentLocationEl);
+             
 var currentTemp = currentForecastData.temp; 
 var currentWind = currentForecastData.wind_speed;
 var currentHumidity = currentForecastData.humidity;
 var currentUVIndex = currentForecastData.uvi;
-console.log(currentTemp, currentWind, currentHumidity, currentUVIndex);
+console.log(currentTemp, currentWind, currentHumidity, currentUVIndex, currentIcon);
+
+
+// create elements to hold each weather detail
+var currentContainerEl = document.createElement("div");
+currentContainerEl.className = "stats";
+
+// create each weather detail line
+var tempCurrentEl = document.createElement("p");
+tempCurrentEl.innerHTML = "<p class='temp'>Temp: " + currentTemp + " °C</p>";
+var windCurrentEl = document.createElement("p");
+windCurrentEl.innerHTML = "<p class='wind'>Wind: " + currentWind + " KPH</p>";
+var humidityCurrentEl = document.createElement("p");
+humidityCurrentEl.innerHTML = "<p class=humidity'>Humidity: " + currentHumidity + "%</p>";
+var uviCurrentEl = document.createElement("p");
+uviCurrentEl.innerHTML = "<p class=uvi'> UV Index: " + currentUVIndex + "</p>";
+
+tempEl.appendChild(tempCurrentEl);
+statisticsEl.appendChild(tempEl);
+windEl.appendChild(windCurrentEl);
+statisticsEl.appendChild(windEl);
+humidityEl.appendChild(humidityCurrentEl);
+statisticsEl.appendChild(humidityEl);
+uviEl.appendChild(uviCurrentEl);
+statisticsEl.appendChild(uviEl);
 }
-
-
-
 
 var displayFiveDayForecast = function(futureForecastData) {
 console.log(futureForecastData)
