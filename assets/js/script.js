@@ -9,8 +9,12 @@
 //                   each item should display an icon reflecting current conditions, temperature, windspeed and humidity
 var inputLocationEl = document.querySelector("#input-form");
 var searchLocationEl = document.querySelector("#search-location");
-var historyButtonsEl = document.querySelector("#history");
-
+// prevous search history list
+var previousSearchesContainerEl = document.querySelector("#previous-searches-container")
+var buttonEl = document.querySelector(".prev-btn");
+var previousSearchHistoryEl = document.querySelector("#previous-search-history");
+var searchedPreviouslyEl = document.querySelector("#searched-previously");
+// display current weather conditions
 var currentDetailsEl = document.querySelector("#current-details");
 var currentLocationEl = document.querySelector("#current-location")
 var locationCurrentEl = document.querySelector("#location-current");
@@ -26,6 +30,7 @@ var humidityEl = document.querySelector("#humidity");
 var uviCurrentEl = document.querySelector("#uvi-current");
 var uviEl = document.querySelector("#uvi");
 var weatherIconEl = document.querySelector(".weather-icon");
+// display upcoming 5 day forecast
 var futureContainerEl = document.querySelector("#future-container");
 
 // create function to fetch required data from API (click event to search, fetch from APL and function to display information requested)
@@ -33,27 +38,48 @@ var futureContainerEl = document.querySelector("#future-container");
 // function to enable input of location and sent to API function call (and store previous searches)
 var inputRequestHandler = function(event) {
   event.preventDefault();
-
   // get value from input element
   var searchLocation = searchLocationEl.value.trim();
+    
 
     // create an array variable in which to store searched locations for later recall
     const previousSearches = JSON.parse(localStorage.previousSearches || "[]");
-    // save locations in local storage in an array for future callback
+    // clear the array (will need to fix this so that there are no duplicates and it only resets for initial run)
+    // if (previousSearches.length > 10) {
+    //   return;
+    // } else {
+    
+    // if searchLocation is blank or is the same as a previous seach, don't add to the array...
     previousSearches.push(searchLocation);
     localStorage.setItem("previousSearches", JSON.stringify(previousSearches));
+    console.log(previousSearches);   
+  
+    // if information has been entered into input field, proceed to retrieve data
+      if (searchLocation) {
+        getLocationForecast(searchLocation);
+      
+        // add search location to previous searches buttons to max 10 
+        for(var i = 0; i < previousSearches.length && i < 10; i++) {
+        var previousSearchHistory = previousSearches[i];
+        console.log(previousSearchHistory)
+    
+        var buttonEl = document.createElement("button");
+        // need to create event handler for this button
+        buttonEl.classList = "prev-btn list-item text-uppercase";
+        buttonEl.type = "submit";
+      
+        var previousSearchHistoryEl = document.createElement("span");
+        previousSearchHistoryEl.innerHTML = previousSearchHistory;
 
-  // if information has been entered into input field, proceed to retrieve data
-  if (searchLocation) {
-    getLocationForecast(searchLocation);
-
-
-    // if nothing entered, require input
-  } else {
-    alert("Please input a city name");
-  }
-};
-
+        buttonEl.appendChild(previousSearchHistoryEl);
+        previousSearchesContainerEl.appendChild(buttonEl);
+        }  
+      // if nothing entered, require input
+      } else {
+        alert("Please input a city name");
+      }
+   
+  };     
 // function to call API
 var getLocationForecast = function (searchLocation) {
   // first get the longitude and latitude required by the onecall API to retrieve acceptance criteria data
@@ -83,12 +109,11 @@ var getLocationForecast = function (searchLocation) {
              
             // add Location and Date for current weather display
            
-            
             response.json().then(function (oneCallApiData) {
             console.log(oneCallApiData);
               // call functions to display the current and future forecasts
               displayCurrentForecast(oneCallApiData.current);
-              // displayFiveDayForecast(oneCallApiData.daily);  
+              displayFiveDayForecast(oneCallApiData.daily);  
               });
             }
           });
@@ -101,11 +126,9 @@ var getLocationForecast = function (searchLocation) {
     .catch(function (error) { //catch network errors
       alert("Unable to access weather dashboard");
     });
- };
 
 
-
-// display information retrieved from API call related to current
+// display information retrieved from API call related to current conditions
 var displayCurrentForecast = function (currentForecastData) {  
 // 
 var currentPartEl = document.createElement("div");
@@ -118,11 +141,12 @@ console.log(locationCurrent);
 var dateCurrent = "(" + moment().format("MM/DD/YYYY") + ")";
 console.log(dateCurrent);
 
-var currentIcon = currentForecastData.icon; 
+
+// var weatherIcon.innerHTML = (img src="http://openweathermap.org/img/wn/" + currentForecastData.icon + "@2x.png"); 
 
 // create h2 elements to hold information
 var currentInfoEl = document.createElement("h3");  
-currentInfoEl.innerHTML = "<h3 class='current-location text-uppercase'>" + locationCurrent + " " + dateCurrent + "</h3>";
+currentInfoEl.innerHTML = "<h3 class='current-location text-uppercase'>" + locationCurrent + " " + dateCurrent +"</h3>";
 
 // append location/date/icon to div h3 tags
 currentLocationEl.appendChild(currentInfoEl);
@@ -133,7 +157,7 @@ var currentTemp = currentForecastData.temp;
 var currentWind = currentForecastData.wind_speed;
 var currentHumidity = currentForecastData.humidity;
 var currentUVIndex = currentForecastData.uvi;
-console.log(currentTemp, currentWind, currentHumidity, currentUVIndex, currentIcon);
+console.log(currentTemp, currentWind, currentHumidity, currentUVIndex);
 
 
 // create elements to hold each weather detail
@@ -162,10 +186,46 @@ statisticsEl.appendChild(uviEl);
 
 var displayFiveDayForecast = function(futureForecastData) {
 console.log(futureForecastData)
-// // for (var i = 0; i < futureForecastData.length; i++) {
-// //   var futureForecast = futureForecastData[i].
-// // }
 
+const futureForecast = JSON.parse(localStorage.futureForecastData.daily || "[]");
+    // clear the array (will need to fix this so that there are no duplicates and it only resets for initial run)
+    // if (previousSearches.length > 10) {
+    //   return;
+    // } else {
+    // // save locations in local storage in an array for future callback
+    // create elements to hold each weather detail
+var dailyContainerEl = document.createElement("div");
+dailyContainerEl.className = "future-list-item";
+
+for (var i = 0; i < futureForecast.length && i < 5; i++);
+
+// create each weather detail line
+var dateFutureEl = document.createElement("h3");
+dateFutureEl.innerHTML = "(" + moment().add([i]+1,'d').format("MM/DD/YYYY") + ")";
+console.log(dateFutureEl);
+// // need to add weather icon here
+// var tempFutureEl = document.createElement("p");
+// tempFutureEl.innerHTML = "<p class='temp'>Temp: " + futureTemp[i] + " °C</p>";
+// var windFutureEl = document.createElement("p");
+// windFutureEl.innerHTML = "<p class='wind'>Wind: " + futureWind[i] + " KPH</p>";
+// var humidityFutureEl = document.createElement("p");
+// humidityFutureEl.innerHTML = "<p class=humidity'>Humidity: " + futureHumidity[i] + "%</p>";
+
+
+// tempEl.appendChild(tempFutureEl);
+// statisticsEl.appendChild(tempEl);
+// windEl.appendChild(windFutureEl);
+// statisticsEl.appendChild(windEl);
+// humidityEl.appendChild(humidityFutureEl);
+// statisticsEl.appendChild(humidityEl);
+
+        
+
+// for (var i = 0; i < futureForecastData.length; i++) {
+// //   var futureForecast = futureForecastData[i].
+
+// }
+};
 }
 
 // add event listeners to forms

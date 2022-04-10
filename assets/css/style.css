@@ -28,6 +28,7 @@
   p {
     font-size: 1.2rem;
     font-weight: bold;
+    color: var(--dark);                                            
   }
   
   ul {
@@ -73,24 +74,26 @@
     margin: 5px 0;
     color: var(--dark);
     border: none;
-    outline: none;
     background-color: var(--tertiary);
     }
     
-  .btn:hover {
+  .search-btn:hover {
     color: var(--dark);
     background-color: var(--tertiary);
     transform: translate(0, 0);
   }
   
-  .previous-searches {
-     align-items: center;
-    }
-    
-  .btn-inline {
-    display: inline;
+  .prev-btn:hover {
+    color: var(--tertiary);
+    background-color: var(--dark);
+    transform: translate(0,0);
+
   }
-  
+  .previous-searches {
+     text-align: center;
+   
+  }
+     
   .hero {
     padding: 2.5px;
     margin: 20px;
@@ -125,19 +128,29 @@
     }
   
   .list-item {
-    border-radius: var(--border-radius);
-    background-color: var(--light-dark);
-    color: var(--primary);
+    border-radius: var(--secondary);
+    background-color: var(--tertiary);
+    color: var(--dark);
     text-decoration: none;
-    width: 100px;
-    height: 150px;
-    float: left;
+    width: 200x;
+    height: 35px;
+    text-align: center;
     margin-right: 10px;
     list-style: none;
   }     
-  
+  .future-list-item {
+    background-color: var(--dark);
+    color: var(--primary);
+    text-decoration: none;
+    width: 150x;
+    height: 300x;
+    text-align: center;
+    margin-right: 10px;
+    list-style: none;
+  }     
  .list-item:hover {
     background-color: var(--dark);
+    color: var(--tertiary);
   }
   
   /* .status-icon {
@@ -165,12 +178,12 @@
   .card-header {
     color: var(--dark);
     background-color: var(--primary);
-    padding: 2.5%;
+    padding: 5px;
     text-align: center;
   }
 
   .card-body {
-    padding: 2.5%;
+    padding: 5px;
   }
   
   /* Input space */

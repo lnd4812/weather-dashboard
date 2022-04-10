@@ -21,23 +21,25 @@
                 <h3 class="card-header text-uppercase">Search for a City:</h3>
                 <form id="input-form" class="card-body">
                     <input name="search-location" id="search-location" type="text" autofocus="true" class="form-input"/>
-                    <button type="submit" class="btn search-btn">Search</button>
+                    <button type="submit" class="search-btn">Search</button>
                 </form>
                 <div id="previous" class="previous-searches">
                     <h4 class="card-header text-uppercase">Search History</h4>
-                    <div class="card-body">
-                        <div id="history" class="list-group in-the-past"><span id="previous-search-history"></span>
-                            <button type="submit" class="btn prev-btn">name of previous city</button>
-                        </div>    
-                    </div><!--card-body/search-history-->
+                    <div id="previous-searches-container" class="card-body">
+                        <div>
+                               
+                            </div>
+                            <!--  -->
+                           
+                    </div><!--container-->
                 </div><!--previous searches-->
             </div><!--search-container-->
         </div><!--locations-side-->
+
         <!--container for current weather display and 5 day forecast-->
-        
         <div  class="col-12 col-md-8 info-top">
             <div id="current-part">
-                <div class="weather-icon"><img src="icons/unknown.png" /></div> 
+                <div class="weather-icon"></div> 
                 <div id="current-details">
                     <h3 id="current-location" class="text-uppercase"><span id="location-current"></span><span id="date-current"></span></h3>
                 </div>
