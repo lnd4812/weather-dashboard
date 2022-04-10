@@ -139,13 +139,14 @@
     list-style: none;
   }     
   .future-list-item {
-    background-color: var(--dark);
-    color: var(--primary);
+    /* background-color: var(--dark); */
+    color: var(--dark);
+    font-weight: bold;
     text-decoration: none;
-    width: 150x;
-    height: 300x;
-    text-align: center;
-    margin-right: 10px;
+    /* width: 100x;
+    height: 300x; */
+    text-align: left;
+    /* margin-right: 10px; */
     list-style: none;
   }     
  .list-item:hover {
