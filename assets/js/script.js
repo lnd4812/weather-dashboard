@@ -220,25 +220,25 @@ var getLocationForecast = function (searchLocation) {
     var forecastHumidityOne = futureForecastData[0].humidity;
     console.log(forecastDateOne, forecastTempOne, forecastWindOne, forecastHumidityOne);
     
-    var forecastDateTwo = moment.unix(futureForecastData[1].dt).add(2, "d").format("MM/DD/YYYY");
+    var forecastDateTwo = moment.unix(futureForecastData[1].dt).add(1, "d").format("MM/DD/YYYY");
     var forecastTempTwo = futureForecastData[1].temp.day;
     var forecastWindTwo = futureForecastData[1].wind_speed;
     var forecastHumidityTwo = futureForecastData[1].humidity;
     console.log(forecastDateTwo, forecastTempTwo, forecastWindTwo, forecastHumidityTwo);
 
-    var forecastDateThree = moment.unix(futureForecastData[2].dt).add(3, "d").format("MM/DD/YYYY");
+    var forecastDateThree = moment.unix(futureForecastData[2].dt).add(1, "d").format("MM/DD/YYYY");
     var forecastTempThree = futureForecastData[2].temp.day;
     var forecastWindThree = futureForecastData[2].wind_speed;
     var forecastHumidityThree = futureForecastData[2].humidity;
     console.log(forecastDateThree, forecastTempThree, forecastWindThree, forecastHumidityThree);
 
-    var forecastDateFour = moment.unix(futureForecastData[3].dt).add(4, "d").format("MM/DD/YYYY");
+    var forecastDateFour = moment.unix(futureForecastData[3].dt).add(1, "d").format("MM/DD/YYYY");
     var forecastTempFour = futureForecastData[3].temp.day;
     var forecastWindFour = futureForecastData[3].wind_speed;
     var forecastHumidityFour = futureForecastData[3].humidity;
     console.log(forecastDateFour, forecastTempFour, forecastWindFour, forecastHumidityFour);
 
-    var forecastDateFive = moment.unix(futureForecastData[4].dt).add(5, "d").format("MM/DD/YYYY");
+    var forecastDateFive = moment.unix(futureForecastData[4].dt).add(1, "d").format("MM/DD/YYYY");
     var forecastTempFive = futureForecastData[4].temp.day;
     var forecastWindFive = futureForecastData[4].wind_speed;
     var forecastHumidityFive = futureForecastData[4].humidity;
