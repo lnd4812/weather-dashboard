@@ -34,9 +34,9 @@ var humidityCurrentEl = document.querySelector("#humidity-current");
 var humidityEl = document.querySelector("#humidity");
 var uviCurrentEl = document.querySelector("#uvi-current");
 var uviEl = document.querySelector("#uvi");
+var dateEl = document.querySelector(".date");
 var weatherIconEl = document.querySelector(".weather-icon");
-// display upcoming 5 day forecast
-var futureContainerEl = document.querySelector("#future-container");
+
 
 // function to enable input of location and sent to API function call (and store previous searches)
 var inputRequestHandler = function (event) {
@@ -49,15 +49,14 @@ var inputRequestHandler = function (event) {
   const previousSearches = JSON.parse(localStorage.previousSearches || "[]");
  
   // if searchLocation is blank or is the same as a previous search, don't add to the array...
-  if (previousSearches.indexOf(searchLocation) === -1 || (searchLocation = "")) {
+  if (previousSearches.indexOf(searchLocation) === -1 || (searchLocation != "")) {
     previousSearches.push(searchLocation);
-    
+  }  
     // store items in reverse order in local storage so that only the most recent searches remain
     var previousSearchesReverse = previousSearches.reverse();
     localStorage.setItem("previousSearchesReverse", JSON.stringify(previousSearchesReverse));
     console.log(previousSearchesReverse);
-  }
-
+  
   // if information has been entered into input field, proceed to retrieve data
   if (searchLocation) {
     getLocationForecast(searchLocation);
@@ -78,12 +77,12 @@ var inputRequestHandler = function (event) {
       buttonEl.appendChild(previousSearchHistoryEl);
       previousSearchesContainerEl.appendChild(buttonEl);
     }  
-    // function to enable click on previously searched locations to load to input field
-      var previousLocationRequestHandler = function (buttonEl) {
-      buttonEl.textContent=searchLocation.value;
-      return searchLocation;      }
-    // add eventlistener for click on previous search button
-    previousSearchHistoryEl.addEventListener("submit",previousLocationRequestHandler);
+    // // function to enable click on previously searched locations to load to input field
+    //   var previousLocationRequestHandler = function (buttonEl) {
+    //   buttonEl.textContent=searchLocation.value;
+    //   return searchLocation;      }
+    // // add eventlistener for click on previous search button
+    // previousSearchHistoryEl.addEventListener("submit",previousLocationRequestHandler);
     
     // if nothing entered, require input
   } else {
@@ -123,7 +122,7 @@ var getLocationForecast = function (searchLocation) {
                 console.log(oneCallApiData);
                 // call functions to display the current and future forecasts
                 displayCurrentForecast(oneCallApiData.current);
-                displayFiveDayForecast(oneCallApiData.daily);
+                displayFutureForecastDayOne(oneCallApiData.daily);
               });
             }
           });
@@ -199,45 +198,254 @@ var getLocationForecast = function (searchLocation) {
     statisticsEl.appendChild(humidityEl);
     uviEl.appendChild(uviCurrentEl);
     statisticsEl.appendChild(uviEl);
+  
   };
-
   // set up display items for futureforecast
   
-  var createForecastItem = function (forecastDataObj) {
-    var forecastItemEl = document.createElement("li");
-    forecastItemEl.classList = "future-list-item"
-    console.log(forecastDataObj);
-    var forecastDate = moment.unix(forecastDataObj.dt).add(1,"d").format("MM/DD/YYYY");
-    // console.log(forecastDate);
-    // var forecastTemp = forecastDataObj.temp.day;
-    // console.log(forecastTemp);
-    // var forecastWind = forecastDataObj.wind_speed;
-    // console.log(forecastWind);
-    // var forecastHumidity = forecastDataObj.humidity;
-    // console.log(forecastHumidity);
 
-    var forecastDateEl = document.createElement("span");
-    forecastDateEl.innerText = forecastDate;
-    forecastItemEl.appendChild(forecastDateEl);
-
-    // var forecastTempEl = document.createElement("span");
-    // forecastTempEl.innerText = "Temp: " + forecastTemp + " °C";
-    // forecastItemTempEl.appendChild(forecastTempEl);
+  var displayFutureForecastDayOne = function(futureForecastData) {
     
-    // var forecastHumidityEl = document.createElement("span");
-    // forecastHumidityEl.innerText = "Humidity: " + forecastHumidity + " %";
-    // forecastItemHumidityEl.appendChild(forecastHumidityEl);
+    // display upcoming 5 day forecast
+    var futureContainerEl = document.querySelector("#future-container");
+    var fiveDayContainerEl = document.querySelector("#five-day-container");
+    var dayOneEl = document.querySelector("#day1");
+    var dayTwoEl = document.querySelector("#day2");
+    var dayThreeEl = document.querySelector("#day3");
+    var dayFourEl = document.querySelector("#day4");
+    var dayFiveEl = document.querySelector("#day5");
+
+    var forecastDateOne = moment.unix(futureForecastData[0].dt).add(1, "d").format("MM/DD/YYYY");
+    var forecastTempOne = futureForecastData[0].temp.day;
+    var forecastWindOne = futureForecastData[0].wind_speed;
+    var forecastHumidityOne = futureForecastData[0].humidity;
+    console.log(forecastDateOne, forecastTempOne, forecastWindOne, forecastHumidityOne);
+    
+    var forecastDateTwo = moment.unix(futureForecastData[1].dt).add(2, "d").format("MM/DD/YYYY");
+    var forecastTempTwo = futureForecastData[1].temp.day;
+    var forecastWindTwo = futureForecastData[1].wind_speed;
+    var forecastHumidityTwo = futureForecastData[1].humidity;
+    console.log(forecastDateTwo, forecastTempTwo, forecastWindTwo, forecastHumidityTwo);
+
+    var forecastDateThree = moment.unix(futureForecastData[2].dt).add(3, "d").format("MM/DD/YYYY");
+    var forecastTempThree = futureForecastData[2].temp.day;
+    var forecastWindThree = futureForecastData[2].wind_speed;
+    var forecastHumidityThree = futureForecastData[2].humidity;
+    console.log(forecastDateThree, forecastTempThree, forecastWindThree, forecastHumidityThree);
+
+    var forecastDateFour = moment.unix(futureForecastData[3].dt).add(4, "d").format("MM/DD/YYYY");
+    var forecastTempFour = futureForecastData[3].temp.day;
+    var forecastWindFour = futureForecastData[3].wind_speed;
+    var forecastHumidityFour = futureForecastData[3].humidity;
+    console.log(forecastDateFour, forecastTempFour, forecastWindFour, forecastHumidityFour);
+
+    var forecastDateFive = moment.unix(futureForecastData[4].dt).add(5, "d").format("MM/DD/YYYY");
+    var forecastTempFive = futureForecastData[4].temp.day;
+    var forecastWindFive = futureForecastData[4].wind_speed;
+    var forecastHumidityFive = futureForecastData[4].humidity;
+    console.log(forecastDateFive, forecastTempFive, forecastWindFive, forecastHumidityFive);
+
+    // set up 1st of 5
+    var dateDayOneEl = document.querySelector("#date-future-one");
+    var dateOneEl = document.querySelector("#date1");
+    var tempDayOneEl = document.querySelector("#temp-future-one");
+    var tempOneEl = document.querySelector("#temp1");
+    var windDayOneEl = document.querySelector("#wind-future-one");
+    var windOneEl = document.querySelector("#wind1");
+    var humidityDayOneEl = document.querySelector("#humidity-future-one");
+    var humidityOneEl = document.querySelector("#humidity1");
+    
+        
+    var dateDayOneEl = document.createElement("p");
+    dateDayOneEl.innerText = forecastDateOne;
+    var tempDayOneEl = document.createElement("p");
+    tempDayOneEl.innerText = "Temp: " + forecastTempOne + " °C";
+    var windDayOneEl = document.createElement("p");
+    windDayOneEl.innerText = "Wind: " + forecastWindOne + " KPH";
+    var humidityDayOneEl = document.createElement("p");
+    humidityDayOneEl.innerText = "Humidity: " + forecastHumidityOne + " %";
+     
+    dateOneEl.appendChild(dateDayOneEl);
+    dayOneEl.appendChild(dateOneEl);
+    tempOneEl.appendChild(tempDayOneEl);
+    dayOneEl.appendChild(tempOneEl);
+    windOneEl.appendChild(windDayOneEl);
+    dayOneEl.appendChild(windOneEl);
+    humidityOneEl.appendChild(humidityDayOneEl);
+    dayOneEl.appendChild(humidityOneEl);
+
+    // set up 2nd of 5
+    var dateDayTwoEl = document.querySelector("#date-future-two");
+    var dateTwoEl = document.querySelector("#date2");
+    var tempDayTwoEl = document.querySelector("#temp-future-two");
+    var tempTwoEl = document.querySelector("#temp2");
+    var windDayTwoEl = document.querySelector("#wind-future-two");
+    var windTwoEl = document.querySelector("#wind2");
+    var humidityDayTwoEl = document.querySelector("#humidity-future-two");
+    var humidityTwoEl = document.querySelector("#humidity2");
+    
+        
+    var dateDayTwoEl = document.createElement("p");
+    dateDayTwoEl.innerText = forecastDateTwo;
+    var tempDayTwoEl = document.createElement("p");
+    tempDayTwoEl.innerText = "Temp: " + forecastTempTwo + " °C";
+    var windDayTwoEl = document.createElement("p");
+    windDayTwoEl.innerText = "Wind: " + forecastWindTwo + " KPH";
+    var humidityDayOneEl = document.createElement("p");
+    humidityDayTwoEl.innerText = "Humidity: " + forecastHumidityTwo + " %";
+     
+    dateTwoEl.appendChild(dateDayTwoEl);
+    dayTwoEl.appendChild(dateTwoEl);
+    tempTwoEl.appendChild(tempDayTwoEl);
+    dayTwoEl.appendChild(tempTwoEl);
+    windTwoEl.appendChild(windDayTwoEl);
+    dayTwoEl.appendChild(windTwoEl);
+    humidityTwoEl.appendChild(humidityDayTwoEl);
+    dayTwoEl.appendChild(humidityTwoEl);
+
+    var dateDayThreeEl = document.querySelector("#date-future-three");
+    var dateThreeEl = document.querySelector("#date3");
+    var tempDayThreeEl = document.querySelector("#temp-future-three");
+    var tempThreeEl = document.querySelector("#temp3");
+    var windDayThreeEl = document.querySelector("#wind-future-three");
+    var windThreeEl = document.querySelector("#wind3");
+    var humidityDayThreeEl = document.querySelector("#humidity-future-three");
+    var humidityThreeEl = document.querySelector("#humidity3");
+            
+    var dateDayThreeEl = document.createElement("p");
+    dateDayThreeEl.innerText = forecastDateThree;
+    var tempDayThreeEl = document.createElement("p");
+    tempDayThreeEl.innerText = "Temp: " + forecastTempThree + " °C";
+    var windDayThreeEl = document.createElement("p");
+    windDayThreeEl.innerText = "Wind: " + forecastWindThree + " KPH";
+    var humidityDayThreeEl = document.createElement("p");
+    humidityDayThreeEl.innerText = "Humidity: " + forecastHumidityThree + " %";
+     
+    dateThreeEl.appendChild(dateDayThreeEl);
+    dayThreeEl.appendChild(dateThreeEl);
+    tempThreeEl.appendChild(tempDayThreeEl);
+    dayThreeEl.appendChild(tempThreeEl);
+    windThreeEl.appendChild(windDayThreeEl);
+    dayThreeEl.appendChild(windThreeEl);
+    humidityThreeEl.appendChild(humidityDayThreeEl);
+    dayThreeEl.appendChild(humidityThreeEl);
+
+    var dateDayFourEl = document.querySelector("#date-future-four");
+    var dateFourEl = document.querySelector("#date4");
+    var tempDayFourEl = document.querySelector("#temp-future-four");
+    var tempFourEl = document.querySelector("#temp4");
+    var windDayFourEl = document.querySelector("#wind-future-four");
+    var windFourEl = document.querySelector("#wind4");
+    var humidityDayFourEl = document.querySelector("#humidity-future-four");
+    var humidityFourEl = document.querySelector("#humidity4");
+    
+        
+    var dateDayFourEl = document.createElement("p");
+    dateDayFourEl.innerText = forecastDateFour;
+    var tempDayFourEl = document.createElement("p");
+    tempDayFourEl.innerText = "Temp: " + forecastTempFour + " °C";
+    var windDayFourEl = document.createElement("p");
+    windDayFourEl.innerText = "Wind: " + forecastWindFour + " KPH";
+    var humidityDayFourEl = document.createElement("p");
+    humidityDayFourEl.innerText = "Humidity: " + forecastHumidityFour + " %";
+     
+    dateFourEl.appendChild(dateDayFourEl);
+    dayFourEl.appendChild(dateFourEl);
+    tempFourEl.appendChild(tempDayFourEl);
+    dayFourEl.appendChild(tempFourEl);
+    windFourEl.appendChild(windDayFourEl);
+    dayFourEl.appendChild(windFourEl);
+    humidityFourEl.appendChild(humidityDayFourEl);
+    dayFourEl.appendChild(humidityFourEl);
+
+
+    var dateDayFiveEl = document.querySelector("#date-future-five");
+    var dateFiveEl = document.querySelector("#date5");
+    var tempDayFiveEl = document.querySelector("#temp-future-five");
+    var tempFiveEl = document.querySelector("#temp5");
+    var windDayFiveEl = document.querySelector("#wind-future-five");
+    var windFiveEl = document.querySelector("#wind5");
+    var humidityDayFiveEl = document.querySelector("#humidity-future-five");
+    var humidityFiveEl = document.querySelector("#humidity5");
+    
+        
+    var dateDayFiveEl = document.createElement("p");
+    dateDayFiveEl.innerText = forecastDateFive;
+    var tempDayFiveEl = document.createElement("p");
+    tempDayFiveEl.innerText = "Temp: " + forecastTempFive + " °C";
+    var windDayFiveEl = document.createElement("p");
+    windDayFiveEl.innerText = "Wind: " + forecastWindFive + " KPH";
+    var humidityDayFiveEl = document.createElement("p");
+    humidityDayFiveEl.innerText = "Humidity: " + forecastHumidityFive + " %";
+     
+    dateFiveEl.appendChild(dateDayFiveEl);
+    dayFiveEl.appendChild(dateFiveEl);
+    tempFiveEl.appendChild(tempDayFiveEl);
+    dayFiveEl.appendChild(tempFiveEl);
+    windFiveEl.appendChild(windDayFiveEl);
+    dayFiveEl.appendChild(windFiveEl);
+    humidityFiveEl.appendChild(humidityDayFiveEl);
+    dayFiveEl.appendChild(humidityFiveEl);
+
+    fiveDayContainerEl.appendChild(dayOneEl);
+    fiveDayContainerEl.appendChild(dayTwoEl);
+    fiveDayContainerEl.appendChild(dayThreeEl);
+    fiveDayContainerEl.appendChild(dayFourEl);
+    fiveDayContainerEl.appendChild(dayFiveEl);
+
+  };  
+
+ };
+
+
+//   var createForecastItem = function (forecastDataObj) {
+//     var forecastDay1El = document.createElement("div");
+    
+//     forecastDay1El.className = "future-list-item";
+//     var forecastItemDateEl = document.createElement("li");
+//     console.log(forecastDataObj);
+//     var forecastDate = moment.unix(forecastDataObj.dt).add(1,"d").format("MM/DD/YYYY");
+//     console.log(forecastDate);
+//     var forecastItemTempEl = document.createElement("li");
+//     var forecastTemp = forecastDataObj.temp.day;
+//     console.log(forecastTemp);
+//     var forecastItemWindEl = document.createElement("li");
+//     var forecastWind = forecastDataObj.wind_speed;
+//     console.log(forecastWind);
+//     var forecastItemHumidityEl = document.createElement("li");
+//     var forecastHumidity = forecastDataObj.humidity;
+//     console.log(forecastHumidity);
+
+//     var forecastDateEl = document.createElement("span");
+//     forecastDateEl.innerText = forecastDate;
+//     forecastItemDateEl.appendChild(forecastDateEl);
+
+//     var forecastTempEl = document.createElement("span");
+//     forecastTempEl.innerText = "Temp: " + forecastTemp + " °C";
+//     forecastItemTempEl.appendChild(forecastTempEl);
+    
+//     var forecastWindEl = document.createElement("span");
+//     forecastWindEl.innerText = "Wind: " + forecastWind + " KPH";
+//     forecastItemWindEl.appendChild(forecastWindEl);
+
+//     var forecastHumidityEl = document.createElement("span");
+//     forecastHumidityEl.innerText = "Humidity: " + forecastHumidity + " %";
+//     forecastItemHumidityEl.appendChild(forecastHumidityEl);
+
+//     forecastDay1El.appendChild(forecastItemDateEl);
+//     forecastDay1El.appendChild(forecastItemTempEl);
+//     forecastDay1El.appendChild(forecastItemWindEl);
+//     forecastDay1El.appendChild(forecastItemHumidityEl);
   
-    return forecastItemEl;
-  };
+//     return forecastItemDateEl, forecastItemTempEl, forecastItemWindEl, forecastItemHumidityEl;
+//   };
 
   
-  var displayFiveDayForecast = function (futureForecastData) {
-    var forecastListEl = document.getElementById("day1-forecast");
+//   var displayFiveDayForecast = function (futureForecastData) {
+//     var forecastListEl = document.getElementById("day1-forecast");
 
-    var newForecastItem = createForecastItem(futureForecastData[0]);
-    forecastListEl.appendChild(newForecastItem);
-  };
-};
-// add event listener to location input
+//     var newForecastItem = createForecastItem(futureForecastData[0]);
+//     forecastListEl.appendChild(newForecastItem);
+//   };
+ 
+// // add event listener to location input
 inputLocationEl.addEventListener("submit", inputRequestHandler);

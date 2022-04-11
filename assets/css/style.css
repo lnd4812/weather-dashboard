@@ -118,9 +118,31 @@
     width: 100%;
     padding-left: 10px;
     height: 375px;
-    border: 2px solid
+    border: 2px solid black;
   }
 
+  .five-day-container  {
+    display: flex;
+    justify-content: space-evenly;
+      }
+  
+
+  .forecast-info {  
+    height: 175px;
+    width: 100px;
+    margin: 8px;
+    font-size: 10px;
+    font-weight: bold;
+    color: var(--primary);
+    background-color: dark;
+    border: 2px solid black;
+  }
+
+  .forecast-info p {
+    font-size: 10px;
+    font-weight: 10px;
+  }
+  
   .list-group {
     padding: 0;
     list-style: none;
