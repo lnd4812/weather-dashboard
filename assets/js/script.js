@@ -51,19 +51,20 @@ var inputRequestHandler = function (event) {
   // if searchLocation is blank or is the same as a previous search, don't add to the array...
   if (previousSearches.indexOf(searchLocation) != -1 || (searchLocation != "")) {
     previousSearches.push(searchLocation);
-   
+       
     // store items in reverse order in local storage so that only the most recent searches remain
     // var previousSearchesReverse = previousSearches.reverse();
     localStorage.setItem("previousSearches", JSON.stringify(previousSearches));
-    console.log(previousSearches);
+    console.log(previousSearchesReverse);
   
   // if information has been entered into input field, proceed to retrieve data
   if (searchLocation) {
     getLocationForecast(searchLocation);
-        
+     var previousSearchesReverse = previousSearches.reverse();
+
     // add search location to previous searches buttons to max 10 - need to make correct event handler to make buttons clickable and stay on page
-    for (var i = 0; i < previousSearches.length && i < 10; i++) {
-      var previousSearchHistory = previousSearches[i];
+    for (var i = 0; i < previousSearchesReverse.length && i < 10; i++) {
+      var previousSearchHistory = previousSearchesReverse[i];
       console.log(previousSearchHistory);
 
       var buttonEl = document.createElement("button");
@@ -78,9 +79,8 @@ var inputRequestHandler = function (event) {
       previousSearchesContainerEl.appendChild(buttonEl);
      
     // // function to enable click on previously searched locations to load to input field
-    function previousLocationRequestHandler(buttonEl) {
-        buttonEl.textContent = searchLocation.value;
-        return searchLocation;
+    var previousLocationRequestHandler = function() {
+        inputRequestHandler(buttonEl.value);
       }
     }
     // add eventlistener for click on previous search button
@@ -152,21 +152,26 @@ var getLocationForecast = function (searchLocation) {
     var dateCurrent = "(" + moment().format("MM/DD/YYYY") + ")";
     console.log(dateCurrent);
 
-    // var weatherIcon.innerHTML = (img src="http://openweathermap.org/img/wn/" + currentForecastData.icon + "@2x.png");
-
+    // coding suggestions from Stack Overflow & Margaret W.N.
+    var currentWeatherIcon = currentForecastData.weather.icon
+    var img = document.querySelector("#weatherIcon");
+    img.setAttribute("src", `http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`)
+    weatherIconEl.appendChild(img);
+    
     // create h2 elements to hold information
     var currentInfoEl = document.createElement("h3");
     currentInfoEl.innerHTML =
       "<h3 class='current-location text-uppercase'>" +
       locationCurrent +
       " " +
-      dateCurrent +
+      dateCurrent + 
       "</h3>";
 
     // append location/date/icon to div h3 tags
     currentLocationEl.appendChild(currentInfoEl);
     // append h3 tag contents to div
     currentDetailsEl.appendChild(currentLocationEl);
+    
 
     var currentTemp = currentForecastData.temp;
     var currentWind = currentForecastData.wind_speed;
@@ -177,6 +182,8 @@ var getLocationForecast = function (searchLocation) {
     // create elements to hold each weather detail
     var currentContainerEl = document.createElement("div");
     currentContainerEl.className = "stats";
+
+    
 
     // create each weather detail line
     var tempCurrentEl = document.createElement("p");
