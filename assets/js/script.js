@@ -49,21 +49,21 @@ var inputRequestHandler = function (event) {
   const previousSearches = JSON.parse(localStorage.previousSearches || "[]");
  
   // if searchLocation is blank or is the same as a previous search, don't add to the array...
-  if (previousSearches.indexOf(searchLocation) === -1 || (searchLocation != "")) {
+  if (previousSearches.indexOf(searchLocation) != -1 || (searchLocation != "")) {
     previousSearches.push(searchLocation);
-  }  
+   
     // store items in reverse order in local storage so that only the most recent searches remain
-    var previousSearchesReverse = previousSearches.reverse();
-    localStorage.setItem("previousSearchesReverse", JSON.stringify(previousSearchesReverse));
-    console.log(previousSearchesReverse);
+    // var previousSearchesReverse = previousSearches.reverse();
+    localStorage.setItem("previousSearches", JSON.stringify(previousSearches));
+    console.log(previousSearches);
   
   // if information has been entered into input field, proceed to retrieve data
   if (searchLocation) {
     getLocationForecast(searchLocation);
         
     // add search location to previous searches buttons to max 10 - need to make correct event handler to make buttons clickable and stay on page
-    for (var i = 0; i < previousSearchesReverse.length && i < 10; i++) {
-      var previousSearchHistory = previousSearchesReverse[i];
+    for (var i = 0; i < previousSearches.length && i < 10; i++) {
+      var previousSearchHistory = previousSearches[i];
       console.log(previousSearchHistory);
 
       var buttonEl = document.createElement("button");
@@ -76,14 +76,16 @@ var inputRequestHandler = function (event) {
       
       buttonEl.appendChild(previousSearchHistoryEl);
       previousSearchesContainerEl.appendChild(buttonEl);
-    }  
+     
     // // function to enable click on previously searched locations to load to input field
-    //   var previousLocationRequestHandler = function (buttonEl) {
-    //   buttonEl.textContent=searchLocation.value;
-    //   return searchLocation;      }
-    // // add eventlistener for click on previous search button
-    // previousSearchHistoryEl.addEventListener("submit",previousLocationRequestHandler);
-    
+    function previousLocationRequestHandler(buttonEl) {
+        buttonEl.textContent = searchLocation.value;
+        return searchLocation;
+      }
+    }
+    // add eventlistener for click on previous search button
+    previousSearchHistoryEl.addEventListener("submit",previousLocationRequestHandler);
+  }   
     // if nothing entered, require input
   } else {
     alert("Please input a city name");
@@ -122,7 +124,7 @@ var getLocationForecast = function (searchLocation) {
                 console.log(oneCallApiData);
                 // call functions to display the current and future forecasts
                 displayCurrentForecast(oneCallApiData.current);
-                displayFutureForecastDayOne(oneCallApiData.daily);
+                displayFutureForecast(oneCallApiData.daily);
               });
             }
           });
@@ -200,26 +202,24 @@ var getLocationForecast = function (searchLocation) {
     statisticsEl.appendChild(uviEl);
   
   };
-  // set up display items for futureforecast
   
 
-  var displayFutureForecastDayOne = function(futureForecastData) {
+  var displayFutureForecast = function(futureForecastData) {
     
-    // display upcoming 5 day forecast
-    var futureContainerEl = document.querySelector("#future-container");
+    // display upcoming 5 day forecast - this sets up the divs for each day's forecast information
     var fiveDayContainerEl = document.querySelector("#five-day-container");
     var dayOneEl = document.querySelector("#day1");
     var dayTwoEl = document.querySelector("#day2");
     var dayThreeEl = document.querySelector("#day3");
     var dayFourEl = document.querySelector("#day4");
     var dayFiveEl = document.querySelector("#day5");
-
+       
     var forecastDateOne = moment.unix(futureForecastData[0].dt).add(1, "d").format("MM/DD/YYYY");
     var forecastTempOne = futureForecastData[0].temp.day;
     var forecastWindOne = futureForecastData[0].wind_speed;
     var forecastHumidityOne = futureForecastData[0].humidity;
     console.log(forecastDateOne, forecastTempOne, forecastWindOne, forecastHumidityOne);
-    
+
     var forecastDateTwo = moment.unix(futureForecastData[1].dt).add(1, "d").format("MM/DD/YYYY");
     var forecastTempTwo = futureForecastData[1].temp.day;
     var forecastWindTwo = futureForecastData[1].wind_speed;
@@ -245,13 +245,13 @@ var getLocationForecast = function (searchLocation) {
     console.log(forecastDateFive, forecastTempFive, forecastWindFive, forecastHumidityFive);
 
     // set up 1st of 5
-    var dateDayOneEl = document.querySelector("#date-future-one");
+    var dateDayOneEl = document.querySelector("#date-future-1");
     var dateOneEl = document.querySelector("#date1");
-    var tempDayOneEl = document.querySelector("#temp-future-one");
+    var tempDayOneEl = document.querySelector("#temp-future-1");
     var tempOneEl = document.querySelector("#temp1");
-    var windDayOneEl = document.querySelector("#wind-future-one");
+    var windDayOneEl = document.querySelector("#wind-future-1");
     var windOneEl = document.querySelector("#wind1");
-    var humidityDayOneEl = document.querySelector("#humidity-future-one");
+    var humidityDayOneEl = document.querySelector("#humidity-future-1");
     var humidityOneEl = document.querySelector("#humidity1");
     
         
@@ -274,13 +274,13 @@ var getLocationForecast = function (searchLocation) {
     dayOneEl.appendChild(humidityOneEl);
 
     // set up 2nd of 5
-    var dateDayTwoEl = document.querySelector("#date-future-two");
+    var dateDayTwoEl = document.querySelector("#date-future-2");
     var dateTwoEl = document.querySelector("#date2");
-    var tempDayTwoEl = document.querySelector("#temp-future-two");
+    var tempDayTwoEl = document.querySelector("#temp-future-2");
     var tempTwoEl = document.querySelector("#temp2");
-    var windDayTwoEl = document.querySelector("#wind-future-two");
+    var windDayTwoEl = document.querySelector("#wind-future-2");
     var windTwoEl = document.querySelector("#wind2");
-    var humidityDayTwoEl = document.querySelector("#humidity-future-two");
+    var humidityDayTwoEl = document.querySelector("#humidity-future-2");
     var humidityTwoEl = document.querySelector("#humidity2");
     
         
@@ -302,13 +302,13 @@ var getLocationForecast = function (searchLocation) {
     humidityTwoEl.appendChild(humidityDayTwoEl);
     dayTwoEl.appendChild(humidityTwoEl);
 
-    var dateDayThreeEl = document.querySelector("#date-future-three");
+    var dateDayThreeEl = document.querySelector("#date-future-3");
     var dateThreeEl = document.querySelector("#date3");
-    var tempDayThreeEl = document.querySelector("#temp-future-three");
+    var tempDayThreeEl = document.querySelector("#temp-future-3");
     var tempThreeEl = document.querySelector("#temp3");
-    var windDayThreeEl = document.querySelector("#wind-future-three");
+    var windDayThreeEl = document.querySelector("#wind-future-3");
     var windThreeEl = document.querySelector("#wind3");
-    var humidityDayThreeEl = document.querySelector("#humidity-future-three");
+    var humidityDayThreeEl = document.querySelector("#humidity-future-3");
     var humidityThreeEl = document.querySelector("#humidity3");
             
     var dateDayThreeEl = document.createElement("p");
@@ -329,13 +329,13 @@ var getLocationForecast = function (searchLocation) {
     humidityThreeEl.appendChild(humidityDayThreeEl);
     dayThreeEl.appendChild(humidityThreeEl);
 
-    var dateDayFourEl = document.querySelector("#date-future-four");
+    var dateDayFourEl = document.querySelector("#date-future-4");
     var dateFourEl = document.querySelector("#date4");
-    var tempDayFourEl = document.querySelector("#temp-future-four");
+    var tempDayFourEl = document.querySelector("#temp-future-4");
     var tempFourEl = document.querySelector("#temp4");
-    var windDayFourEl = document.querySelector("#wind-future-four");
+    var windDayFourEl = document.querySelector("#wind-future-4");
     var windFourEl = document.querySelector("#wind4");
-    var humidityDayFourEl = document.querySelector("#humidity-future-four");
+    var humidityDayFourEl = document.querySelector("#humidity-future-4");
     var humidityFourEl = document.querySelector("#humidity4");
     
         
@@ -358,13 +358,13 @@ var getLocationForecast = function (searchLocation) {
     dayFourEl.appendChild(humidityFourEl);
 
 
-    var dateDayFiveEl = document.querySelector("#date-future-five");
+    var dateDayFiveEl = document.querySelector("#date-future-5");
     var dateFiveEl = document.querySelector("#date5");
-    var tempDayFiveEl = document.querySelector("#temp-future-five");
+    var tempDayFiveEl = document.querySelector("#temp-future-5");
     var tempFiveEl = document.querySelector("#temp5");
-    var windDayFiveEl = document.querySelector("#wind-future-five");
+    var windDayFiveEl = document.querySelector("#wind-future-5");
     var windFiveEl = document.querySelector("#wind5");
-    var humidityDayFiveEl = document.querySelector("#humidity-future-five");
+    var humidityDayFiveEl = document.querySelector("#humidity-future-5");
     var humidityFiveEl = document.querySelector("#humidity5");
     
         
@@ -403,40 +403,14 @@ var getLocationForecast = function (searchLocation) {
 //     forecastDay1El.className = "future-list-item";
 //     var forecastItemDateEl = document.createElement("li");
 //     console.log(forecastDataObj);
-//     var forecastDate = moment.unix(forecastDataObj.dt).add(1,"d").format("MM/DD/YYYY");
-//     console.log(forecastDate);
-//     var forecastItemTempEl = document.createElement("li");
-//     var forecastTemp = forecastDataObj.temp.day;
-//     console.log(forecastTemp);
-//     var forecastItemWindEl = document.createElement("li");
-//     var forecastWind = forecastDataObj.wind_speed;
-//     console.log(forecastWind);
-//     var forecastItemHumidityEl = document.createElement("li");
-//     var forecastHumidity = forecastDataObj.humidity;
-//     console.log(forecastHumidity);
-
+//     
 //     var forecastDateEl = document.createElement("span");
 //     forecastDateEl.innerText = forecastDate;
 //     forecastItemDateEl.appendChild(forecastDateEl);
 
-//     var forecastTempEl = document.createElement("span");
-//     forecastTempEl.innerText = "Temp: " + forecastTemp + " °C";
-//     forecastItemTempEl.appendChild(forecastTempEl);
-    
-//     var forecastWindEl = document.createElement("span");
-//     forecastWindEl.innerText = "Wind: " + forecastWind + " KPH";
-//     forecastItemWindEl.appendChild(forecastWindEl);
-
-//     var forecastHumidityEl = document.createElement("span");
-//     forecastHumidityEl.innerText = "Humidity: " + forecastHumidity + " %";
-//     forecastItemHumidityEl.appendChild(forecastHumidityEl);
-
 //     forecastDay1El.appendChild(forecastItemDateEl);
-//     forecastDay1El.appendChild(forecastItemTempEl);
-//     forecastDay1El.appendChild(forecastItemWindEl);
-//     forecastDay1El.appendChild(forecastItemHumidityEl);
-  
-//     return forecastItemDateEl, forecastItemTempEl, forecastItemWindEl, forecastItemHumidityEl;
+//       
+//     return forecastItemDateEl
 //   };
 
   

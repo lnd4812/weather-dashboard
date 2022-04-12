@@ -91,7 +91,6 @@
   }
   .previous-searches {
      text-align: center;
-   
   }
      
   .hero {
@@ -121,26 +120,25 @@
     border: 2px solid black;
   }
 
-  .five-day-container  {
+  .future-display  {
     display: flex;
     justify-content: space-evenly;
-      }
+    }
   
-
   .forecast-info {  
     height: 175px;
-    width: 100px;
+    width: 102px;
     margin: 8px;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
-    color: var(--primary);
-    background-color: dark;
+    background: var(--dark);
     border: 2px solid black;
   }
 
   .forecast-info p {
     font-size: 10px;
     font-weight: 10px;
+    color: var(--primary);
   }
   
   .list-group {
@@ -160,17 +158,17 @@
     margin-right: 10px;
     list-style: none;
   }     
-  .future-list-item {
-    /* background-color: var(--dark); */
-    color: var(--dark);
+  /* .future-list-item {
+    background-color: var(--dark);    
+    color: var(--primary);
     font-weight: bold;
     text-decoration: none;
     /* width: 100x;
     height: 300x; */
-    text-align: left;
+    /* text-align: left; */
     /* margin-right: 10px; */
-    list-style: none;
-  }     
+    /* list-style: none; 
+  } */    
  .list-item:hover {
     background-color: var(--dark);
     color: var(--tertiary);
