@@ -35,7 +35,7 @@ var humidityEl = document.querySelector("#humidity");
 var uviCurrentEl = document.querySelector("#uvi-current");
 var uviEl = document.querySelector("#uvi");
 var dateEl = document.querySelector(".date");
-var weatherIconEl = document.querySelector(".weather-icon");
+
 
 
 // function to enable input of location and sent to API function call (and store previous searches)
@@ -48,23 +48,23 @@ var inputRequestHandler = function (event) {
   // create an array variable in which to store searched locations for later recall
   const previousSearches = JSON.parse(localStorage.previousSearches || "[]");
  
-  // if searchLocation is blank or is the same as a previous search, don't add to the array...
-  if (previousSearches.indexOf(searchLocation) != -1 || (searchLocation != "")) {
-    previousSearches.push(searchLocation);
-       
-    // store items in reverse order in local storage so that only the most recent searches remain
-    // var previousSearchesReverse = previousSearches.reverse();
-    localStorage.setItem("previousSearches", JSON.stringify(previousSearches));
-    console.log(previousSearchesReverse);
+  
   
   // if information has been entered into input field, proceed to retrieve data
   if (searchLocation) {
     getLocationForecast(searchLocation);
-     var previousSearchesReverse = previousSearches.reverse();
-
-    // add search location to previous searches buttons to max 10 - need to make correct event handler to make buttons clickable and stay on page
-    for (var i = 0; i < previousSearchesReverse.length && i < 10; i++) {
-      var previousSearchHistory = previousSearchesReverse[i];
+     
+    // if searchLocation is blank or is the same as a previous search, don't add to the array..need to ensure valid entry & not blank.
+    if ((previousSearches.includes(searchLocation) === false)) {
+    previousSearches.push(searchLocation);
+    };
+          
+    // store items in reverse order in local storage so that only the most recent searches remain
+    localStorage.setItem("previousSearches", JSON.stringify(previousSearches.reverse()));
+    console.log(previousSearches);// add search location to previous searches buttons to max 10 - need to make correct event handler to make buttons clickable and stay on page
+    
+    for (var i = 0; i < previousSearches.length && i < 10; i++) {
+      var previousSearchHistory = previousSearches[i];
       console.log(previousSearchHistory);
 
       var buttonEl = document.createElement("button");
@@ -80,12 +80,12 @@ var inputRequestHandler = function (event) {
      
     // // function to enable click on previously searched locations to load to input field
     var previousLocationRequestHandler = function() {
-        inputRequestHandler(buttonEl.value);
+        getLocationForecast(previousSearchesContainerEl);
       }
-    }
-    // add eventlistener for click on previous search button
-    previousSearchHistoryEl.addEventListener("submit",previousLocationRequestHandler);
-  }   
+    };
+      // add eventlistener for click on previous search button
+    previousSearchHistoryEl.addEventListener("submit",previousLocationRequestHandler); 
+     
     // if nothing entered, require input
   } else {
     alert("Please input a city name");
@@ -147,26 +147,27 @@ var getLocationForecast = function (searchLocation) {
 
     // set current date for display in current section
     var locationCurrent = searchLocation;
-    console.log(locationCurrent);
-
-    var dateCurrent = "(" + moment().format("MM/DD/YYYY") + ")";
-    console.log(dateCurrent);
-
-    // coding suggestions from Stack Overflow & Margaret W.N.
-    var currentWeatherIcon = currentForecastData.weather.icon
-    var img = document.querySelector("#weatherIcon");
-    img.setAttribute("src", `http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`)
-    weatherIconEl.appendChild(img);
     
-    // create h2 elements to hold information
+    var dateCurrent = "(" + moment().format("MM/DD/YYYY") + ")";
+    
+    // coding suggestions from Stack Overflow & Margaret W.N. & Beki
+    var currentWeatherIcon = currentForecastData.weather[0].icon;
+
+    console.log(currentForecastData.weather);
+    console.log("WeatherIcon", currentWeatherIcon);
+    
+    var weatherIconEl = document.querySelector(".weather-icon");
+    var weatherImgEl = document.createElement("img");
+    weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/"+currentWeatherIcon+"@2x.png");
+    weatherImgEl.setAttribute("alt", "weather icon");
+    weatherIconEl = document.getElementById("weatherIcon");
+    
+        // create h3 elements to hold information
     var currentInfoEl = document.createElement("h3");
     currentInfoEl.innerHTML =
-      "<h3 class='current-location text-uppercase'>" +
-      locationCurrent +
-      " " +
-      dateCurrent + 
-      "</h3>";
-
+      '<h3 class=\'current-location text-uppercase\'>' + locationCurrent + ' ' + dateCurrent + '</h3>';
+      
+    currentInfoEl.appendChild(weatherImgEl);
     // append location/date/icon to div h3 tags
     currentLocationEl.appendChild(currentInfoEl);
     // append h3 tag contents to div
