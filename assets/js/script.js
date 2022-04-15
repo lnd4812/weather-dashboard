@@ -21,7 +21,6 @@ var previousSearchHistoryEl = document.querySelector(
 // display current weather conditions
 var currentDetailsEl = document.querySelector("#current-details");
 var currentLocationEl = document.querySelector("#current-location");
-var locationCurrentEl = document.querySelector("#location-current");
 var currentDateEl = document.querySelector("#date-current");
 var currentContainerEl = document.querySelector("#current-container");
 var statisticsEl = document.querySelector("#statistics");
@@ -39,17 +38,18 @@ var loadPreviousSearches = function() {
   // create an array variable in which to store searched locations for later recall
   const previousSearches = JSON.parse(localStorage.previousSearches || "[]");
 
-  for (var i = 0; i < previousSearches.length && i < 10; i++) {
+  for (var i = 0; i < previousSearches.length; i++) {
+    // if array reaches 10 search locations, remove the last to make room for the most recent location
+   
     var previousSearchHistory = previousSearches[i];
-    console.log(previousSearchHistory);
-
+    
     var buttonEl = document.createElement("button");
     // need to create event handler for this button
     buttonEl.classList = "prev-btn list-item text-uppercase";
     buttonEl.type = "submit";
 
     var previousSearchHistoryEl = document.createElement("span");
-    previousSearchHistoryEl.innerHTML = previousSearchHistory;
+    previousSearchHistoryEl.innerHTML = previousSearchHistory.reverse();
     
     buttonEl.appendChild(previousSearchHistoryEl);
     previousSearchesContainerEl.appendChild(buttonEl);
@@ -79,19 +79,19 @@ var inputRequestHandler = function (event) {
 
     // if searchLocation is the same as a previous search, don't add to the array..need to ensure valid entry & not blank.
     if ((getPreviousSearches.includes(searchLocation) === false)) {
-
-    getPreviousSearches.push(searchLocation);
+      if (getPreviousSearches.length >= 10) {
+        getPreviousSearches.pop(); }
+      getPreviousSearches.push(searchLocation);
     
-    // store items in reverse order in local storage so that only the most recent searches remain
-    localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches.reverse()));
-    console.log(getPreviousSearches);// add search location to previous searches buttons to max 10 - need to m
+    // store latest lookup in array of previously searched locastions
+    localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches));
+    console.log(getPreviousSearches);// add search location to previous searches buttons to max 10 
     };
-          
-        // if nothing entered, require input
+    
+    // if nothing entered, require input
   } else {
     alert("Please input a city name");
   }
-
 };
 
 loadPreviousSearches();
@@ -157,9 +157,8 @@ function getLocationForecast(searchLocation) {
     weatherImgEl.setAttribute("alt", "weather icon");
     var weatherIconEl = document.getElementById("weatherIcon");
     weatherIconEl.appendChild(weatherImgEl);
-
     
-   // append location/date/icon to div h3 tags
+   // append location & date to h3 tags
     currentLocationEl.appendChild(currentInfoEl);
     // append h3 tag contents to div
     currentDetailsEl.appendChild(currentLocationEl);
@@ -205,17 +204,40 @@ function getLocationForecast(searchLocation) {
 
     // display upcoming 5 day forecast - this sets up the divs for each day's forecast information
     var fiveDayContainerEl = document.querySelector("#five-day-container");
-    var dayOneEl = document.querySelector("#day1");
-    var dayTwoEl = document.querySelector("#day2");
-    var dayThreeEl = document.querySelector("#day3");
-    var dayFourEl = document.querySelector("#day4");
-    var dayFiveEl = document.querySelector("#day5");
+    var dayOneEl = document.querySelector("#day-1");
+    var dayTwoEl = document.querySelector("#day-2");
+    var dayThreeEl = document.querySelector("#day-3");
+    var dayFourEl = document.querySelector("#day-4");
+    var dayFiveEl = document.querySelector("#day-5");
 
 
-    // for (var i=0; i < 5; i++)
-
+    for (var i=0; i < 5; i++) {
+      var dailyDate = moment.unix(futureForecastData[i].date)
+      var dayDateElId = dailyDate.dayDateEl;
+      dayDateElHTMLId = document.getElementById("#day-" + [i]+1);
+      
+      
+      
+      dayOneEl.date = 
+      dayTwoEl.date = document.getElementById()
+      
+      
+      dayOneEl.temp = document.getElementById("#temp-" + [i]+1);
+      dayOneEl.wind = document.getElementById("#wind-" + [i]+1);
+      dayOneEl.humidity = document.getElementById("#humidity-" + [i]+1);
+      // everything appends to "day-[i]" container and each day-[i] container appends to five-day-container - daily containers will change
     // var forecastDayNumber = getElementById("") forecastDate.[i]
 
+          for (var i = 0; i < 5; i++) {
+            
+              
+            
+            
+            var forecastTemp = futureForecastData[i].temp.day;
+            var forecastWind = futureForecastData[i].wind;
+            var forecastHumidity = futureForecastData[i].humidity;
+          }
+        }
     // var forecastDateOne = moment.unix(futureForecastData[i].dt).add(1, "d").format("MM/DD/YYYY");
     // // var forecastIconOne = futureForecastData.weather[0].icon;
     // var forecastTempOne = futureForecastData[i].temp.day;
