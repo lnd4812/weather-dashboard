@@ -37,17 +37,19 @@
         </div><!--locations-side-->
 
         <!--container for current weather display and 5 day forecast-->
-        <div  class="col-12 col-md-8 info-top">
+        <div  class="col-12 col-md-8 info-side">
             <div id="current-part">                
-                <div id="current-details">
-                    <h3 id="current-location" class="text-uppercase"><span id="location-current"></span><span id="date-current"></span></h3>
+                <div id="current-details" class="row">
+                    <h3 id="current-location" class="text-uppercase col-6"></h3>
+                    <div class="icon col-6 flex-start" id="weatherIcon"></div>
                 </div>
+                <div class="clearfix"></div>
                 <div id="current-container" class="col-12 col-md-8 stats">
                     <div id="statistics"></div>
-                    <p id="temp"><span id="temp-current"></span></p>
-                    <p id="wind"><span id="wind-current"></span></p>
-                    <p id="humidity"><span id="humidity-current"></span></p>
-                    <p id="uvi"><span id="uvi-current"></span></p>
+                    <p id="temp"></p>
+                    <p id="wind"></p>
+                    <p id="humidity"></p>
+                    <p id="uvi"></p>
                 </div><!--current-container-->
             </div><!--current-part-->
             <div id="future-part">
@@ -55,34 +57,34 @@
                     <h3>5-Day Forecast:</h3>
                     <div id="five-day-container" class="future-display flex-row">
                         <div id="day1" class="forecast-info">
-                            <p id="date1" class="date"><span id="date-future-1"></span></p>
-                            <p id="temp1" class="temp"><span id="temp-future-1"></span></p>
-                            <p id="wind1"class="wind"  ><span id="wind-future-1"></span></p>
-                            <p id="humidity1" class="humidity" ><span id="humidity-future-1"></span></p>
+                            <p id="date1" class="date"></p>
+                            <p id="temp1" class="temp"></p>
+                            <p id="wind1"class="wind"></p>
+                            <p id="humidity1" class="humidity"></p>
                         </div>
                         <div id="day2" class="forecast-info">
-                            <p id="date2"class="date" ><span id="date-future-2"></span></p>
-                            <p id="temp2"  class="temp"><span id="temp-future-2"></span></p>
-                            <p id="wind2" class="wind" ><span id="wind-future-2"></span></p>
-                            <p id="humidity2" class="humidity" ><span id="humidity-future-2"></span></p>
+                            <p id="date2"class="date" ></p>
+                            <p id="temp2"  class="temp"></p>
+                            <p id="wind2" class="wind"></p>
+                            <p id="humidity2" class="humidity"></p>
                         </div>
                         <div id="day3" class="forecast-info">
-                            <p id="date3"class="date" ><span id="date-future-3"></span></p>
-                            <p id="temp3" class="temp" ><span id="temp-future-3"></span></p>
-                            <p id="wind3"class="wind"  ><span id="wind-future-3"></span></p>
-                            <p id="humidity3" class="humidity" ><span id="humidity-future-3"></span></p>
+                            <p id="date3"class="date" ></p>
+                            <p id="temp3" class="temp" ></p>
+                            <p id="wind3"class="wind"  ></p>
+                            <p id="humidity3" class="humidity" ></p>
                         </div>
                         <div id="day4" class="forecast-info">
-                            <p id="date4"class="date" ><span id="date-future-4"></span></p>
-                            <p id="temp4" class="temp" ><span id="temp-future-4"></span></p>
-                            <p id="wind4"class="wind"  ><span id="wind-future-4"></span></p>
-                            <p id="humidity4" class="humidity" ><span id="humidity-future-4"></span></p>
+                            <p id="date4"class="date" ></p>
+                            <p id="temp4" class="temp" ></p>
+                            <p id="wind4"class="wind"  ></p>
+                            <p id="humidity4" class="humidity" ></p>
                         </div>
                         <div id="day5" class="forecast-info">
-                            <p id="date5" class="date"><span  id="date-future-5"></span></p>
-                            <p id="temp5" class="temp"><span id="temp-future-5"></span></p>
-                            <p id="wind5"class="wind"  ><span id="wind-future-5"></span></p>
-                            <p id="humidity5" class="humidity" ><span id="humidity-future-5"></span></p>
+                            <p id="date5" class="date"></p>
+                            <p id="temp5" class="temp"></p>
+                            <p id="wind5"class="wind"  ></p>
+                            <p id="humidity5" class="humidity" ></p>
                         </div>
                     </div>
                 </div>
