@@ -657,6 +657,66 @@ function getLocationForecast(searchLocation) {
 
 }
 
+astData) {
+  //
+
+  // create container to hold list with list items representing weather conditions
+  var weatherDetailsEl = document.createElement("div");
+  weatherDetailsEl.className = "info.side";
+
+  // list to display current weather
+  var currentWeatherEl = document.createElement("ul");
+  currentWeatherEl.className = "weather-now";
+
+    
+  var currentDate = "(" + moment().format("MM/DD/YYYY") + ")";
+
+  //create icon image - coding suggestions from Stack Overflow & Margaret W.N. & Beki & tutoring session
+  var currentWeatherIcon = currentForecastData.weather[0].icon;
+  var weatherImgEl = document.createElement("img");
+  weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/" + currentWeatherIcon + ".png");
+  weatherImgEl.setAttribute("alt", "weather icon");
+  var weatherIconEl = document.createElement("div");
+  weatherIconEl.appendChild(weatherImgEl);
+
+  // create rest of forecast display
+  var currentTemp = currentForecastData.temp;
+  var currentWind = currentForecastData.wind_speed;
+  var currentHumidity = currentForecastData.humidity;
+  var currentUVIndex = currentForecastData.uvi;
+  console.log(currentTemp, currentWind, currentHumidity, currentUVIndex);
+
+  
+  // var listItemInfoEl = document.createElement("li");
+  // listItemInfoEl.className = "list-item info";  
+  // listItemInfoEl.classList = "display: inline"; 
+  // listItemInfoEl.textContent = "<h3>" + searchLocation + " " + currentDate + "</h3>";
+  // var listItemTempEl = document.createElement("li");
+  // listItemTempEl.className = "list-item temp";  
+  // listItemTempEl.classList = "display: inline"; 
+  // listItemTempEl.textContent = "<p class='temp'>Temp: " + currentTemp + " °C</p>";
+  // var listItemWindEl = document.createElement("li");
+  // listItemWindEl.className = "list-item wind";  
+  // listItemWindEl.classList = "display: inline"; 
+  // listItemWindEl.textContent = "<p class='wind'>Wind: " + currentWind + " KPH</p>";
+  // var listItemHumidityEl = document.createElement("li");
+  // listItemHumidityEl.className = "list-item humidity";  
+  // listItemHumidityEl.classList = "display: inline"; 
+  // listItemHumidityEl.textContent = "<p class='humidity'>Humidity: " + currentHumidity + "%</p>";
+  // var listItemUviEl = document.createElement("li");
+  // listItemUviEl.className = "list-item uvi";  
+  // listItemUviEl.classList = "display: inline"; 
+  // listItemUviEl.textContent = "<p class=uvi'> UV Index: " + currentUVIndex + "</p>";
+
+  // listItemInfoEl.appendChild(weatherIconEl);
+  // currentWeatherEl.appendChild(listItemInfoEl);
+  // currentWeatherEl.appendChild(listItemTempEl);
+  // currentWeatherEl.appendChild(listItemWindEl);
+  // currentWeatherEl.appendChild(listItemHumidityEl);
+  // currentWeatherEl.appendChild(listItemUviEl);
+  // weatherDetailsEl.appendChild(currentWeatherEl);
+    
+
 
 //   var createForecastItem = function (forecastDataObj) {
 //     var forecastDay1El = document.createElement("div");
