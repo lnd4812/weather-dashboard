@@ -53,17 +53,13 @@ var loadPreviousSearches = function() {
     
     buttonEl.appendChild(previousSearchHistoryEl);
     buttonEl.addEventListener("click", function() {
-      var searchLocation = buttonEl.value;
+      var searchLocation = previousSearchHistory;
       console.log(searchLocation);  
       getLocationForecast(searchLocation);
     });
     previousSearchesContainerEl.appendChild(buttonEl);
-    
-  
   };
-    // add eventlistener for click on previous search button
-  // previousSearchHistoryEl.addEventListener("submit",previousLocationRequestHandler); 
-} 
+}; 
 
 // function to enable input of location and sent to API function call (and store previous searches)
 var inputRequestHandler = function (event) {
@@ -77,15 +73,16 @@ var inputRequestHandler = function (event) {
     getLocationForecast(searchLocation);
      
     var getPreviousSearches = JSON.parse(localStorage.getItem("previousSearches"));
-
+    
     // if searchLocation is the same as a previous search, don't add to the array..need to ensure valid entry & not blank.
     if ((getPreviousSearches.includes(searchLocation) === false)) {
-              getPreviousSearches.push(searchLocation);
+      // if (getPreviousSearches.length >= 10) {
+      //   getPreviousSearches.pop(); }
+      getPreviousSearches.push(searchLocation);
     
-    // store items in reverse order in local storage so that only the most recent searches remain
-    
-    localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches.reverse()));
-    console.log(getPreviousSearches);// add search location to previous searches buttons to max 10 - need to m
+    // store latest lookup in array of previously searched locastions
+    localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches));
+    console.log(getPreviousSearches);// add search location to previous searches buttons to max 10 
     };
           
         // if nothing entered, require input
@@ -169,38 +166,8 @@ function getLocationForecast(searchLocation) {
   var currentUVIndex = currentForecastData.uvi;
   console.log(currentTemp, currentWind, currentHumidity, currentUVIndex);
 
-  
-  // var listItemInfoEl = document.createElement("li");
-  // listItemInfoEl.className = "list-item info";  
-  // listItemInfoEl.classList = "display: inline"; 
-  // listItemInfoEl.textContent = "<h3>" + searchLocation + " " + currentDate + "</h3>";
-  // var listItemTempEl = document.createElement("li");
-  // listItemTempEl.className = "list-item temp";  
-  // listItemTempEl.classList = "display: inline"; 
-  // listItemTempEl.textContent = "<p class='temp'>Temp: " + currentTemp + " °C</p>";
-  // var listItemWindEl = document.createElement("li");
-  // listItemWindEl.className = "list-item wind";  
-  // listItemWindEl.classList = "display: inline"; 
-  // listItemWindEl.textContent = "<p class='wind'>Wind: " + currentWind + " KPH</p>";
-  // var listItemHumidityEl = document.createElement("li");
-  // listItemHumidityEl.className = "list-item humidity";  
-  // listItemHumidityEl.classList = "display: inline"; 
-  // listItemHumidityEl.textContent = "<p class='humidity'>Humidity: " + currentHumidity + "%</p>";
-  // var listItemUviEl = document.createElement("li");
-  // listItemUviEl.className = "list-item uvi";  
-  // listItemUviEl.classList = "display: inline"; 
-  // listItemUviEl.textContent = "<p class=uvi'> UV Index: " + currentUVIndex + "</p>";
-
-  // listItemInfoEl.appendChild(weatherIconEl);
-  // currentWeatherEl.appendChild(listItemInfoEl);
-  // currentWeatherEl.appendChild(listItemTempEl);
-  // currentWeatherEl.appendChild(listItemWindEl);
-  // currentWeatherEl.appendChild(listItemHumidityEl);
-  // currentWeatherEl.appendChild(listItemUviEl);
-  // weatherDetailsEl.appendChild(currentWeatherEl);
     
-    
-    //   // set current date for display in current section
+    // set current date for display in current section
     var currentDate = "(" + moment().format("MM/DD/YYYY") + ")";
 
     // create h3 elements to hold information
@@ -254,20 +221,18 @@ function getLocationForecast(searchLocation) {
     statisticsEl.appendChild(humidityEl);
     uviEl.appendChild(uviCurrentEl);
     statisticsEl.appendChild(uviEl);
-
   };
-
 
   var displayFutureForecast = function (futureForecastData) {
 
     // display upcoming 5 day forecast - this sets up the divs for each day's forecast information
     var fiveDayContainerEl = document.querySelector("#five-day-container");
-    var dayOneEl = document.querySelector("#day1");
-    var dayTwoEl = document.querySelector("#day2");
-    var dayThreeEl = document.querySelector("#day3");
-    var dayFourEl = document.querySelector("#day4");
-    var dayFiveEl = document.querySelector("#day5");
-
+    var dayOneEl = document.querySelector(".day1");
+    var dayTwoEl = document.querySelector(".day2");
+    var dayThreeEl = document.querySelector(".day3");
+    var dayFourEl = document.querySelector(".day4");
+    var dayFiveEl = document.querySelector(".day5");
+    
 
     // for (var i=0; i < 5; i++)
 
