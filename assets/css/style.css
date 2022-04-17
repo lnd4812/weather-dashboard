@@ -1,8 +1,8 @@
 :root {
   --primary: #ffffff;
-  --secondary: rgb(81, 133, 247, 0.897);
+  --secondary: rgba(9, 60, 168, 0.897);
   --tertiary: rgba(175, 198, 245);
-  --dark: #244479;
+  --dark: #0c2650;
   --light-dark: gray;
   }
 
@@ -44,9 +44,6 @@ p {
   color: var(--dark);                                            
 }
 
-/* ul {
-  margin: 0;
-} */
 
 /* set up search input styling */
 .locations-side {
@@ -57,7 +54,6 @@ p {
 .search-container {
   width: 95%;
   justify-content: center;
-  border-top: 2px solid black;
 }
 
 .search-btn {
@@ -82,7 +78,8 @@ p {
   margin: 5px 0;
   color: var(--dark);
   border: none;
-  background-color: var(--tertiary);
+  border-radius: 12px;
+  background-color: var(--secondard);
   }
   
 .search-btn:hover {
@@ -98,7 +95,9 @@ p {
 }
 .previous-searches {
    text-align: center;
+   border-top: 2px solid black;
 }
+
 /* set up current and future forecast displays */
 #current-part {
   width: 100%; 
@@ -163,9 +162,10 @@ margin-left:0px;;
 .forecast-info {  
   width: 15%;
   margin: 10px;
+  padding-left: 5px;
   font-size: 12px;
   font-weight: bold;
-  background: var(--dark);
+  background: var(--secondary);
   border: none;
 }
 

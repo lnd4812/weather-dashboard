@@ -21,7 +21,7 @@ var previousSearchHistoryEl = document.querySelector(
 // display current weather conditions
 var currentDetailsEl = document.querySelector("#current-details");
 var currentLocationEl = document.querySelector("#current-location");
-var locationCurrentEl = document.querySelector("#location-current");
+
 var currentDateEl = document.querySelector("#date-current");
 var currentContainerEl = document.querySelector("#current-container");
 var statisticsEl = document.querySelector("#statistics");
@@ -41,7 +41,7 @@ var loadPreviousSearches = function() {
   previousSearchesContainerEl.innerHTML = "";
 
   for (var i = 0; i < previousSearches.length && i < 10; i++) {
-    var previousSearchHistory = previousSearches[i];
+    const previousSearchHistory = previousSearches[i];
     console.log(previousSearchHistory);
 
     var buttonEl = document.createElement("button");
@@ -51,14 +51,17 @@ var loadPreviousSearches = function() {
 
     var previousSearchHistoryEl = document.createElement("span");
     previousSearchHistoryEl.innerHTML = previousSearchHistory;
-    
+  
     buttonEl.appendChild(previousSearchHistoryEl);
+    previousSearchesContainerEl.appendChild(buttonEl);
+    
     buttonEl.addEventListener("click", function() {
+      // clear old content
+      searchLocationEl.value = ""; 
       var searchLocation = previousSearchHistory;
       console.log(searchLocation);  
       getLocationForecast(searchLocation);
     });
-    previousSearchesContainerEl.appendChild(buttonEl);
   };
 }; 
 
@@ -68,21 +71,19 @@ var previousSearchHandler = function(locationName) {
   var getPreviousSearches = JSON.parse(localStorage.getItem("previousSearches"));
     
   // if searchLocation is the same as a previous search, don't add to the array..need to ensure valid entry & not blank.
-  if (getPreviousSearches && (getPreviousSearches.includes(locationName) === false) ) {
+  if ((locationName !='') && getPreviousSearches && (getPreviousSearches.includes(locationName) === false) ) {
       getPreviousSearches.push(locationName);
   
   // store latest lookup in array of previously searched locastions
   
-  } else if (!getPreviousSearches || !getPreviousSearches.length ) {
+  } else if (!getPreviousSearches || !getPreviousSearches.length && locationName != Null) {
     getPreviousSearches = [];
     getPreviousSearches.push(locationName);
   }
   
-  localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches));
+  localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches.reverse()));
   console.log(getPreviousSearches);// add search location to previous searches buttons to max 10   
-
 }
-
 
 // function to enable input of location and sent to API function call (and store previous searches)
 var inputRequestHandler = function (event) {
@@ -94,9 +95,11 @@ var inputRequestHandler = function (event) {
   // if information has been entered into input field, proceed to retrieve data
   if (searchLocation) {
     getLocationForecast(searchLocation);
-     
-      
-        // if nothing entered, require input
+
+  // clear old content
+    searchLocationEl.value = ""; 
+
+    // if nothing entered, require input
   } else {
     alert("Please input a city name");
   }
@@ -106,6 +109,7 @@ loadPreviousSearches();
 
 // function to call API
 function getLocationForecast(searchLocation) {
+  
   // first get the longitude and latitude required by the onecall API to retrieve acceptance criteria data
   var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" +
     searchLocation +
@@ -139,7 +143,6 @@ function getLocationForecast(searchLocation) {
                 previousSearchHandler(searchLocation);
                 loadPreviousSearches();
               });
-
             }
           });
         });
@@ -158,30 +161,8 @@ function getLocationForecast(searchLocation) {
   //
 
   // create container to hold list with list items representing weather conditions
-  var weatherDetailsEl = document.createElement("div");
-  weatherDetailsEl.className = "info.side";
-
-  // list to display current weather
   var currentWeatherEl = document.createElement("div");
   currentWeatherEl.className = "weather-now";
-    
-  var currentDate = "(" + moment().format("MM/DD/YYYY") + ")";
-
-  //create icon image - coding suggestions from Stack Overflow & Margaret W.N. & Beki & tutoring session
-  var currentWeatherIcon = currentForecastData.weather[0].icon;
-  var weatherImgEl = document.createElement("img");
-  weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/" + currentWeatherIcon + ".png");
-  weatherImgEl.setAttribute("alt", "weather icon");
-  var weatherIconEl = document.createElement("div");
-  weatherIconEl.appendChild(weatherImgEl);
-
-  // create rest of forecast display
-  var currentTemp = currentForecastData.temp;
-  var currentWind = currentForecastData.wind_speed;
-  var currentHumidity = currentForecastData.humidity;
-  var currentUVIndex = currentForecastData.uvi;
-  console.log(currentTemp, currentWind, currentHumidity, currentUVIndex);
-
     
     // set current date for display in current section
     var currentDate = "(" + moment().format("MM/DD/YYYY") + ")";
@@ -242,26 +223,12 @@ function getLocationForecast(searchLocation) {
 
     // display upcoming 5 day forecast - this sets up the divs for each day's forecast information
     var fiveDayContainerEl = document.querySelector("#five-day-container");
-    var dayOneEl = document.querySelector(".day1");
-    var dayTwoEl = document.querySelector(".day2");
-    var dayThreeEl = document.querySelector(".day3");
-    var dayFourEl = document.querySelector(".day4");
-    var dayFiveEl = document.querySelector(".day5");
+    var dayOneEl = document.querySelector("#day1");
+    var dayTwoEl = document.querySelector("#day2");
+    var dayThreeEl = document.querySelector("#day3");
+    var dayFourEl = document.querySelector("#day4");
+    var dayFiveEl = document.querySelector("#day5");
     
-
-    // for (var i=0; i < 5; i++)
-
-    // var forecastDayNumber = getElementById("") forecastDate.[i]
-
-    // var forecastDateOne = moment.unix(futureForecastData[i].dt).add(1, "d").format("MM/DD/YYYY");
-    // // var forecastIconOne = futureForecastData.weather[0].icon;
-    // var forecastTempOne = futureForecastData[i].temp.day;
-    // var forecastWindOne = futureForecastData[i].wind_speed;
-    // var forecastHumidityOne = futureForecastData[i].humidity;
-    // console.log(forecastDateOne, forecastTempOne, forecastWindOne, forecastHumidityOne);
-    
-    
-
     var forecastDateOne = moment.unix(futureForecastData[0].dt).add(1, "d").format("MM/DD/YYYY");
     var forecastIconOne = futureForecastData[0].weather[0].icon;
     var forecastTempOne = futureForecastData[0].temp.day;
@@ -462,6 +429,8 @@ function getLocationForecast(searchLocation) {
     dayFiveEl.appendChild(humidityFiveEl);
     fiveDayContainerEl.appendChild(dayFiveEl);
 
+
+     
   };
 
 }
