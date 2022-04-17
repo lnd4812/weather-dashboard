@@ -182,8 +182,7 @@ function getLocationForecast(searchLocation) {
     var weatherIconEl = document.getElementById("weatherIcon");
     weatherIconEl.appendChild(weatherImgEl);
 
-    
-   // append location/date/icon to div h3 tags
+    // append location/date/icon to div h3 tags
     currentLocationEl.appendChild(currentInfoEl);
     // append h3 tag contents to div
     currentDetailsEl.appendChild(currentLocationEl);
@@ -248,55 +247,49 @@ function getLocationForecast(searchLocation) {
     
 
     var forecastDateOne = moment.unix(futureForecastData[0].dt).add(1, "d").format("MM/DD/YYYY");
-    // var forecastIconOne = futureForecastData.weather[0].icon;
+    var forecastIconOne = futureForecastData[0].weather[0].icon;
     var forecastTempOne = futureForecastData[0].temp.day;
     var forecastWindOne = futureForecastData[0].wind_speed;
     var forecastHumidityOne = futureForecastData[0].humidity;
-    console.log(forecastDateOne, forecastTempOne, forecastWindOne, forecastHumidityOne);
-
+    
     var forecastDateTwo = moment.unix(futureForecastData[1].dt).add(1, "d").format("MM/DD/YYYY");
-    // var forecastIconTwo = futureForecastData.weather[1].icon;
+    var forecastIconTwo = futureForecastData[1].weather[0].icon;
     var forecastTempTwo = futureForecastData[1].temp.day;
     var forecastWindTwo = futureForecastData[1].wind_speed;
     var forecastHumidityTwo = futureForecastData[1].humidity;
-    console.log(forecastDateTwo, forecastTempTwo, forecastWindTwo, forecastHumidityTwo);
-
+    
     var forecastDateThree = moment.unix(futureForecastData[2].dt).add(1, "d").format("MM/DD/YYYY");
-    // var forecastIconThree = futureForecastData.weather[2].icon;    
+    var forecastIconThree = futureForecastData[2].weather[0].icon;    
     var forecastTempThree = futureForecastData[2].temp.day;
     var forecastWindThree = futureForecastData[2].wind_speed;
     var forecastHumidityThree = futureForecastData[2].humidity;
-    console.log(forecastDateThree, forecastTempThree, forecastWindThree, forecastHumidityThree);
-
+    
     var forecastDateFour = moment.unix(futureForecastData[3].dt).add(1, "d").format("MM/DD/YYYY");
-    // var forecastIconFour = futureForecastData.weather[3].icon;    
+    var forecastIconFour = futureForecastData[3].weather[0].icon;    
     var forecastTempFour = futureForecastData[3].temp.day;
     var forecastWindFour = futureForecastData[3].wind_speed;
     var forecastHumidityFour = futureForecastData[3].humidity;
-    console.log(forecastDateFour, forecastTempFour, forecastWindFour, forecastHumidityFour);
-
+    
     var forecastDateFive = moment.unix(futureForecastData[4].dt).add(1, "d").format("MM/DD/YYYY");
-    // var forecastIconFive = futureForecastData.weather[4].icon;
+    var forecastIconFive = futureForecastData[4].weather[0].icon;
     var forecastTempFive = futureForecastData[4].temp.day;
     var forecastWindFive = futureForecastData[4].wind_speed;
     var forecastHumidityFive = futureForecastData[4].humidity;
-    console.log(forecastDateFive, forecastTempFive, forecastWindFive, forecastHumidityFive);
-
-    // set up 1st of 5
     
+    // set up 1st of 5
     var dateOneEl = document.querySelector("#date1");
-    // var iconDayOneEl = document.querySelector("#icon-future-1")
-    // var iconOneEl = document.querySelector("#icon1")
+    var iconDayOneEl = document.querySelector("#icon-future-1");
+    var iconOneEl = document.querySelector("#icon1")
     var tempOneEl = document.querySelector("#temp1");
     var windOneEl = document.querySelector("#wind1");
     var humidityOneEl = document.querySelector("#humidity1");
 
     var dateDayOneEl = document.createElement("p");
     dateDayOneEl.innerText = forecastDateOne;
-    // var iconDayOneEl = document.createElement("img");
-    // iconDayOneImgEl.setAttribute("src", "https://openweathermap.org/img/wn/"+forecastIconOne+".png");
-    // iconDayOneImgEl.setAttribute("alt", "weather icon");
-    // iconOneEl = document.getElementById("icon1");
+    var iconDayOneImgEl = document.createElement("img");
+    iconDayOneImgEl.setAttribute("src", "https://openweathermap.org/img/wn/"+forecastIconOne+".png");
+    iconDayOneImgEl.setAttribute("alt", "weather icon");
+    iconOneEl = document.getElementById("icon1");
     var tempDayOneEl = document.createElement("p");
     tempDayOneEl.innerText = "Temp: " + forecastTempOne + " °C";
     var windDayOneEl = document.createElement("p");
@@ -306,22 +299,31 @@ function getLocationForecast(searchLocation) {
 
     dateOneEl.appendChild(dateDayOneEl);
     dayOneEl.appendChild(dateOneEl);
-    // iconOneEl.appendChild(iconDayOneImg)
+    iconOneEl.appendChild(iconDayOneImgEl);
+    iconDayOneEl.appendChild(iconOneEl);
+    dayOneEl.appendChild(iconDayOneEl);
     tempOneEl.appendChild(tempDayOneEl);
     dayOneEl.appendChild(tempOneEl);
     windOneEl.appendChild(windDayOneEl);
     dayOneEl.appendChild(windOneEl);
     humidityOneEl.appendChild(humidityDayOneEl);
     dayOneEl.appendChild(humidityOneEl);
+    fiveDayContainerEl.appendChild(dayOneEl);
 
     // set up 2nd of 5
     var dateTwoEl = document.querySelector("#date2");
+    var iconDayTwoEl = document.querySelector("#icon-future-2");
+    var iconTwoEl = document.querySelector("#icon2");
     var tempTwoEl = document.querySelector("#temp2");
     var windTwoEl = document.querySelector("#wind2");
     var humidityTwoEl = document.querySelector("#humidity2");
 
     var dateDayTwoEl = document.createElement("p");
     dateDayTwoEl.innerText = forecastDateTwo;
+    var iconDayTwoImgEl = document.createElement("img");
+    iconDayTwoImgEl.setAttribute("src", "https://openweathermap.org/img/wn/"+forecastIconTwo+".png");
+    iconDayTwoImgEl.setAttribute("alt", "weather icon");
+    iconTwoEl = document.getElementById("icon2");
     var tempDayTwoEl = document.createElement("p");
     tempDayTwoEl.innerText = "Temp: " + forecastTempTwo + " °C";
     var windDayTwoEl = document.createElement("p");
@@ -331,21 +333,31 @@ function getLocationForecast(searchLocation) {
 
     dateTwoEl.appendChild(dateDayTwoEl);
     dayTwoEl.appendChild(dateTwoEl);
+    iconTwoEl.appendChild(iconDayTwoImgEl);
+    iconDayTwoEl.appendChild(iconTwoEl);
+    dayTwoEl.appendChild(iconDayTwoEl);
     tempTwoEl.appendChild(tempDayTwoEl);
     dayTwoEl.appendChild(tempTwoEl);
     windTwoEl.appendChild(windDayTwoEl);
     dayTwoEl.appendChild(windTwoEl);
     humidityTwoEl.appendChild(humidityDayTwoEl);
     dayTwoEl.appendChild(humidityTwoEl);
-    
+    fiveDayContainerEl.appendChild(dayTwoEl);
+
     // set up 3rd of 5
     var dateThreeEl = document.querySelector("#date3");
+    var iconDayThreeEl = document.querySelector("#icon-future-3");
+    var iconThreeEl = document.querySelector("#icon3");
     var tempThreeEl = document.querySelector("#temp3");
     var windThreeEl = document.querySelector("#wind3");
     var humidityThreeEl = document.querySelector("#humidity3");
 
     var dateDayThreeEl = document.createElement("p");
     dateDayThreeEl.innerText = forecastDateThree;
+    var iconDayThreeImgEl = document.createElement("img");
+    iconDayThreeImgEl.setAttribute("src", "https://openweathermap.org/img/wn/"+forecastIconThree+".png");
+    iconDayThreeImgEl.setAttribute("alt", "weather icon");
+    iconThreeEl = document.getElementById("icon3");
     var tempDayThreeEl = document.createElement("p");
     tempDayThreeEl.innerText = "Temp: " + forecastTempThree + " °C";
     var windDayThreeEl = document.createElement("p");
@@ -355,21 +367,31 @@ function getLocationForecast(searchLocation) {
 
     dateThreeEl.appendChild(dateDayThreeEl);
     dayThreeEl.appendChild(dateThreeEl);
+    iconThreeEl.appendChild(iconDayThreeImgEl);
+    iconDayThreeEl.appendChild(iconThreeEl);
+    dayThreeEl.appendChild(iconDayThreeEl);
     tempThreeEl.appendChild(tempDayThreeEl);
     dayThreeEl.appendChild(tempThreeEl);
     windThreeEl.appendChild(windDayThreeEl);
     dayThreeEl.appendChild(windThreeEl);
     humidityThreeEl.appendChild(humidityDayThreeEl);
     dayThreeEl.appendChild(humidityThreeEl);
-    
+    fiveDayContainerEl.appendChild(dayThreeEl);
+
     // set up 4th of 5
     var dateFourEl = document.querySelector("#date4");
+    var iconDayFourEl = document.querySelector("#icon-future-4");
+    var iconFourEl = document.querySelector("#icon4");
     var tempFourEl = document.querySelector("#temp4");
     var windFourEl = document.querySelector("#wind4");
     var humidityFourEl = document.querySelector("#humidity4");
 
     var dateDayFourEl = document.createElement("p");
     dateDayFourEl.innerText = forecastDateFour;
+    var iconDayFourImgEl = document.createElement("img");
+    iconDayFourImgEl.setAttribute("src", "https://openweathermap.org/img/wn/"+forecastIconFour+".png");
+    iconDayFourImgEl.setAttribute("alt", "weather icon");
+    iconFourEl = document.getElementById("icon4");
     var tempDayFourEl = document.createElement("p");
     tempDayFourEl.innerText = "Temp: " + forecastTempFour + " °C";
     var windDayFourEl = document.createElement("p");
@@ -379,21 +401,31 @@ function getLocationForecast(searchLocation) {
 
     dateFourEl.appendChild(dateDayFourEl);
     dayFourEl.appendChild(dateFourEl);
+    iconFourEl.appendChild(iconDayFourImgEl);
+    iconDayFourEl.appendChild(iconFourEl);
+    dayFourEl.appendChild(iconDayFourEl);
     tempFourEl.appendChild(tempDayFourEl);
     dayFourEl.appendChild(tempFourEl);
     windFourEl.appendChild(windDayFourEl);
     dayFourEl.appendChild(windFourEl);
     humidityFourEl.appendChild(humidityDayFourEl);
     dayFourEl.appendChild(humidityFourEl);
-    
+    fiveDayContainerEl.appendChild(dayFourEl);
+
     // set up 5th of 5
     var dateFiveEl = document.querySelector("#date5");
+    var iconDayFiveEl = document.querySelector("#icon-future-5");
+    var iconFiveEl = document.querySelector("#icon5");
     var tempFiveEl = document.querySelector("#temp5");
     var windFiveEl = document.querySelector("#wind5");
     var humidityFiveEl = document.querySelector("#humidity5");
 
     var dateDayFiveEl = document.createElement("p");
     dateDayFiveEl.innerText = forecastDateFive;
+    var iconDayFiveImgEl = document.createElement("img");
+    iconDayFiveImgEl.setAttribute("src", "https://openweathermap.org/img/wn/"+forecastIconFive+".png");
+    iconDayFiveImgEl.setAttribute("alt", "weather icon");
+    iconFiveEl = document.getElementById("icon5");
     var tempDayFiveEl = document.createElement("p");
     tempDayFiveEl.innerText = "Temp: " + forecastTempFive + " °C";
     var windDayFiveEl = document.createElement("p");
@@ -403,17 +435,15 @@ function getLocationForecast(searchLocation) {
 
     dateFiveEl.appendChild(dateDayFiveEl);
     dayFiveEl.appendChild(dateFiveEl);
+    iconFiveEl.appendChild(iconDayFiveImgEl);
+    iconDayFiveEl.appendChild(iconFiveEl);
+    dayFiveEl.appendChild(iconDayFiveEl);
     tempFiveEl.appendChild(tempDayFiveEl);
     dayFiveEl.appendChild(tempFiveEl);
     windFiveEl.appendChild(windDayFiveEl);
     dayFiveEl.appendChild(windFiveEl);
     humidityFiveEl.appendChild(humidityDayFiveEl);
     dayFiveEl.appendChild(humidityFiveEl);
-
-    fiveDayContainerEl.appendChild(dayOneEl);
-    fiveDayContainerEl.appendChild(dayTwoEl);
-    fiveDayContainerEl.appendChild(dayThreeEl);
-    fiveDayContainerEl.appendChild(dayFourEl);
     fiveDayContainerEl.appendChild(dayFiveEl);
 
   };
