@@ -2,45 +2,50 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-  <link rel="stylesheet" href="./assets/css/style.css" />
-  <title>Open Weather Weather Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Open Weather Weather Dashboard</title>
 </head>
 
 <body class="flex-column min-100-vh">
-    
+
     <header class="hero">
         <h2>Weather Dashboard</h2>
     </header>
-    <main class="flex-row justify-space-between">    
+    <main class="flex-row justify-space-between">
         <div class="col-12 col-md-4 locations-side">
             <div id="search-side" class="search-container">
                 <h3 class="card-header text-uppercase">Search for a City:</h3>
                 <form id="input-form" class="card-body">
-                    <input name="search-location" id="search-location" type="text" autofocus="true" autocomplete="off" class="form-input"/>
+                    <input name="search-location" id="search-location" type="text" autofocus="true" autocomplete="off"
+                        class="form-input" />
                     <button type="submit" class="search-btn">Search</button>
                 </form>
                 <div id="previous" class="previous-searches">
                     <h4 class="card-header text-uppercase">Search History</h4>
                     <div id="previous-searches-container" class="card-body">
                         <div>
-                               
-                            </div>
-                            <!--  -->
-                           
-                    </div><!--container-->
-                </div><!--previous searches-->
-            </div><!--search-container-->
-        </div><!--locations-side-->
+
+                        </div>
+                        <!--  -->
+
+                    </div>
+                    <!--container-->
+                </div>
+                <!--previous searches-->
+            </div>
+            <!--search-container-->
+        </div>
+        <!--locations-side-->
 
         <!--container for current weather display and 5 day forecast-->
-        <div  class="col-12 col-md-8 info-side">
-            <div id="current-part">               
+        <div class="col-12 col-md-8 info-side">
+            <div id="current-part">
                 <div id="current-details" class="weather-now row">
-                    <h3 id="current-location" class="text-uppercase"></h3>  
+                    <h3 id="current-location" class="text-uppercase"></h3>
                     <div class="icon col-12" id="weatherIcon"></div>
                 </div>
                 <div class="clearfix"></div>
@@ -50,8 +55,10 @@
                     <p id="wind"></p>
                     <p id="humidity"></p>
                     <p id="uvi"></p>
-                </div><!--current-container-->
-            </div><!--current-part-->
+                </div>
+                <!--current-container-->
+            </div>
+            <!--current-part-->
             <div id="future-part">
                 <div class="container-name">
                     <h3>5-Day Forecast:</h3>
@@ -60,46 +67,53 @@
                     <div id="five-day-container" class="future-display flex-row">
                         <div class="forecast-info day1">
                             <span id="date1" class="date"></span>
-                            <div id="icon-future-1"></div><span id="icon1" class="icon"></span></div>
+                            <div id="icon-future-1"><span id="icon1" class="icon"></span>
+                            </div>
                             <span id="temp1" class="temp"></span>
-                            <span id="wind1"class="wind"></span>
+                            <span id="wind1" class="wind"></span>
                             <span id="humidity1" class="humidity"></span>
                         </div>
                         <div class="forecast-info day2">
-                            <span id="date2"class="date"></span>
-                            <div id="icon-future-2"></div><span id="icon2" class="icon"></span> </div>
-                            <span id="temp2"  class="temp"></span>
+                            <span id="date2" class="date"></span>
+                            <div id="icon-future-2"><span id="icon2" class="icon"></span>
+                            </div>
+                            <span id="temp2" class="temp"></span>
                             <span id="wind2" class="wind"></span>
                             <span id="humidity2" class="humidity"></span>
                         </div>
                         <div class="forecast-info day3">
-                            <span id="date3"class="date"></span>
-                            <div id="icon-future-3"></div><span id="icon3" class="icon"></span> </div>
+                            <span id="date3" class="date"></span>
+                            <div id="icon-future-3"><span id="icon3" class="icon"></span>
+                            </div>
                             <span id="temp3" class="temp"></span>
-                            <span id="wind3"class="wind"></span>
+                            <span id="wind3" class="wind"></span>
                             <span id="humidity3" class="humidity"></span>
                         </div>
                         <div class="forecast-info day4">
-                            <span id="date4"class="date"></span>
-                            <div id="icon-future-4"></div><span id="icon4" class="icon"></span> </div>
+                            <span id="date4" class="date"></span>
+                            <div id="icon-future-4"><span id="icon4" class="icon"></span>
+                            </div>
                             <span id="temp4" class="temp"></span>
-                            <span id="wind4"class="wind"></span>
+                            <span id="wind4" class="wind"></span>
                             <span id="humidity4" class="humidity"></span>
                         </div>
                         <div class="forecast-info day5">
                             <span id="date5" class="date"></span>
-                            <div id="icon-future-5"></div><span id="icon5" class="icon"></span> </div>
+                            <div id="icon-future-5"><span id="icon5" class="icon"></span>
+                            </div>
                             <span id="temp5" class="temp"></span>
-                            <span id="wind5"class="wind"></span>
-                            <span id="humidity5" class="humidity" ></span>
+                            <span id="wind5" class="wind"></span>
+                            <span id="humidity5" class="humidity"></span>
                         </div>
                     </div>
                 </div>
-            </div><!--future-container-->
+            </div>
+            <!--future-container-->
         </div>
         </div>
-    </main><!--flex-row-justify-space-between-->    
-       
+    </main>
+    <!--flex-row-justify-space-between-->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>

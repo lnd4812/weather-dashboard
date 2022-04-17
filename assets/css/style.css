@@ -2,7 +2,7 @@
   --primary: #ffffff;
   --secondary: rgb(81, 133, 247, 0.897);
   --tertiary: rgba(175, 198, 245);
-  --dark: rgb(6, 30, 75);
+  --dark: #244479;
   --light-dark: gray;
   }
 
@@ -113,8 +113,8 @@ p {
   justify-content: space-around;
   flex-wrap: wrap;
   height: 300px;
-  border: 2px solid black;  
 }
+
 #current-details {
   display: inline-block;
   width: 100%;
@@ -162,7 +162,7 @@ margin-left:0px;;
 
 .forecast-info {  
   width: 15%;
-  margin: 8px;
+  margin: 10px;
   font-size: 12px;
   font-weight: bold;
   background: var(--dark);

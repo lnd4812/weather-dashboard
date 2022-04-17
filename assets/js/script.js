@@ -38,7 +38,8 @@ var dateEl = document.querySelector(".date");
 var loadPreviousSearches = function() {
   // create an array variable in which to store searched locations for later recall
   const previousSearches = JSON.parse(localStorage.previousSearches || "[]");
-  
+  previousSearchesContainerEl.innerHTML = "";
+
   for (var i = 0; i < previousSearches.length && i < 10; i++) {
     var previousSearchHistory = previousSearches[i];
     console.log(previousSearchHistory);
@@ -61,6 +62,28 @@ var loadPreviousSearches = function() {
   };
 }; 
 
+// function to handle previous search local storage
+var previousSearchHandler = function(locationName) {
+
+  var getPreviousSearches = JSON.parse(localStorage.getItem("previousSearches"));
+    
+  // if searchLocation is the same as a previous search, don't add to the array..need to ensure valid entry & not blank.
+  if (getPreviousSearches && (getPreviousSearches.includes(locationName) === false) ) {
+      getPreviousSearches.push(locationName);
+  
+  // store latest lookup in array of previously searched locastions
+  
+  } else if (!getPreviousSearches || !getPreviousSearches.length ) {
+    getPreviousSearches = [];
+    getPreviousSearches.push(locationName);
+  }
+  
+  localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches));
+  console.log(getPreviousSearches);// add search location to previous searches buttons to max 10   
+
+}
+
+
 // function to enable input of location and sent to API function call (and store previous searches)
 var inputRequestHandler = function (event) {
   event.preventDefault();
@@ -72,19 +95,7 @@ var inputRequestHandler = function (event) {
   if (searchLocation) {
     getLocationForecast(searchLocation);
      
-    var getPreviousSearches = JSON.parse(localStorage.getItem("previousSearches"));
-    
-    // if searchLocation is the same as a previous search, don't add to the array..need to ensure valid entry & not blank.
-    if ((getPreviousSearches.includes(searchLocation) === false)) {
-      // if (getPreviousSearches.length >= 10) {
-      //   getPreviousSearches.pop(); }
-      getPreviousSearches.push(searchLocation);
-    
-    // store latest lookup in array of previously searched locastions
-    localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches));
-    console.log(getPreviousSearches);// add search location to previous searches buttons to max 10 
-    };
-          
+      
         // if nothing entered, require input
   } else {
     alert("Please input a city name");
@@ -123,7 +134,12 @@ function getLocationForecast(searchLocation) {
                 // call functions to display the current and future forecasts
                 displayCurrentForecast(oneCallApiData.current);
                 displayFutureForecast(oneCallApiData.daily);
+                
+                // add location to array in location storage and create search history button
+                previousSearchHandler(searchLocation);
+                loadPreviousSearches();
               });
+
             }
           });
         });
