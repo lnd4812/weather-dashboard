@@ -37,8 +37,7 @@ var loadPreviousSearches = function() {
 
   for (var i = 0; i < previousSearches.length && i < 10; i++) {
     const previousSearchHistory = previousSearches[i];
-    console.log(previousSearchHistory);
-
+    
     var buttonEl = document.createElement("button");
     buttonEl.classList = "prev-btn list-item text-uppercase";
     buttonEl.type = "submit";
@@ -53,8 +52,7 @@ var loadPreviousSearches = function() {
       // clear input field
       searchLocationEl.value = "";
       // need to work on correct coding to clear current and future forecast info on click to add new data without page refresh 
-      var searchLocation = previousSearchHistory.reverse();
-      console.log(searchLocation);  
+      var searchLocation = previousSearchHistory;
       getLocationForecast(searchLocation);
     });
   };
