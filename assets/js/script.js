@@ -1,12 +1,4 @@
-// functions required to meet acceptance criteria
-//
-//                   when button for one of the previous searches is clicked, current/future forecast as of that point in time comes up
-//    function to display current weather for the searchCity
-//        display -> city name, date, icon representing weather conditions, humidity, windspeed and UV index
-//                   the UV index should assume class of favourable, moderate or severe
-//    function to display next 5 days weather for that city
-//        display -> future forecast comprised of 5 list items distributed horizonally in a flex-row
-//                   each item should display an icon reflecting current conditions, temperature, windspeed and humidity
+
 var locationsSideEl = document.querySelector("#locations-side")
 var inputLocationEl = document.querySelector("#input-form");
 var searchLocationEl = document.querySelector("#search-location");
@@ -48,7 +40,6 @@ var loadPreviousSearches = function() {
     console.log(previousSearchHistory);
 
     var buttonEl = document.createElement("button");
-    // need to create event handler for this button
     buttonEl.classList = "prev-btn list-item text-uppercase";
     buttonEl.type = "submit";
 
@@ -59,9 +50,10 @@ var loadPreviousSearches = function() {
     previousSearchesContainerEl.appendChild(buttonEl);
     
     buttonEl.addEventListener("click", function() {
-      // clear old content
-      searchLocationEl.value = ""; 
-      var searchLocation = previousSearchHistory;
+      // clear input field
+      searchLocationEl.value = "";
+      // need to work on correct coding to clear current and future forecast info on click to add new data without page refresh 
+      var searchLocation = previousSearchHistory.reverse();
       console.log(searchLocation);  
       getLocationForecast(searchLocation);
     });
@@ -73,26 +65,27 @@ var previousSearchHandler = function(locationName) {
 
   var getPreviousSearches = JSON.parse(localStorage.getItem("previousSearches"));
     
-  // if searchLocation is the same as a previous search, don't add to the array..need to ensure valid entry & not blank.
+  // if searchLocation is the same as a previous search, don't add to the array / limit length to locations
   if ((locationName !='') && getPreviousSearches && (getPreviousSearches.includes(locationName) === false)) {
+      if (getPreviousSearches.length === 10) {
+        getPreviousSearches.shift();
+      }
       getPreviousSearches.push(locationName);
   
-  // store latest lookup in array of previously searched locastions
-  
-  } else if (!getPreviousSearches || !getPreviousSearches.length && locationName != Null) {
+  // to initialize and enable creation of array if nothing in local storage
+   } else if (!getPreviousSearches || !getPreviousSearches.length && locationName != Null) {
     getPreviousSearches = [];
     getPreviousSearches.push(locationName);
   }
   
-  localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches.reverse()));
-  console.log(getPreviousSearches);// add search location to previous searches buttons to max 10   
-}
+  localStorage.setItem("previousSearches", JSON.stringify(getPreviousSearches));
+ }
 
 // function to enable input of location and sent to API function call (and store previous searches)
 var inputRequestHandler = function (event) {
   event.preventDefault();
     
-  // get value from input element
+  // get value from input element (current/future forecast values need to be removed first)
   var searchLocation = searchLocationEl.value.trim();
    
   // if information has been entered into input field, proceed to retrieve data
@@ -208,6 +201,9 @@ function getLocationForecast(searchLocation) {
     humidityCurrentEl.innerHTML =
       "<p class='humidity'>Humidity: " + currentHumidity + "%</p>";
     var uviCurrentEl = document.createElement("p");
+    uviCurrentEl.innerHTML =
+    "<p class='uvi'> UV Index: " + currentUVIndex + "</p>";
+      // getting the correct coding to set the uv index reading colour needs further attention
       // if (parseFloat(currentUVIndex) <=2) {
       //   currentUVIndex.ClassName = "uvreading favorable";
       // } else if (parseFloat(currentUVIndex) >= 3 && currentUVIndex <= 5) {
@@ -217,9 +213,8 @@ function getLocationForecast(searchLocation) {
       // } else if (parseFloat(currentUVIndex) > 10) {
       //   currentUVIndex.ClassName = "uvreading severe";
       // }; 
-    uviCurrentEl.innerHTML =
-    "<p class='uvi'> UV Index: " + currentUVIndex + "</p>";
-
+    
+    // append all items to current weather display container
     tempEl.appendChild(tempCurrentEl);
     statisticsEl.appendChild(tempEl);
     windEl.appendChild(windCurrentEl);
