@@ -35,6 +35,9 @@ var uviCurrentEl = document.querySelector("#uvi-current");
 var uviEl = document.querySelector("#uvi");
 var dateEl = document.querySelector(".date");
 
+// set up container for future forecast
+var fiveDayContainerEl = document.querySelector("#five-day-container");
+
 var loadPreviousSearches = function() {
   // create an array variable in which to store searched locations for later recall
   const previousSearches = JSON.parse(localStorage.previousSearches || "[]");
@@ -71,7 +74,7 @@ var previousSearchHandler = function(locationName) {
   var getPreviousSearches = JSON.parse(localStorage.getItem("previousSearches"));
     
   // if searchLocation is the same as a previous search, don't add to the array..need to ensure valid entry & not blank.
-  if ((locationName !='') && getPreviousSearches && (getPreviousSearches.includes(locationName) === false) ) {
+  if ((locationName !='') && getPreviousSearches && (getPreviousSearches.includes(locationName) === false)) {
       getPreviousSearches.push(locationName);
   
   // store latest lookup in array of previously searched locastions
@@ -158,8 +161,7 @@ function getLocationForecast(searchLocation) {
 
   // display information retrieved from API call related to current conditions
   var displayCurrentForecast = function (currentForecastData) {
-  //
-
+  
   // create container to hold list with list items representing weather conditions
   var currentWeatherEl = document.createElement("div");
   currentWeatherEl.className = "weather-now";
@@ -189,8 +191,8 @@ function getLocationForecast(searchLocation) {
     var currentWind = currentForecastData.wind_speed;
     var currentHumidity = currentForecastData.humidity;
     var currentUVIndex = currentForecastData.uvi;
-    console.log(currentTemp, currentWind, currentHumidity, currentUVIndex);
-
+    currentUVIndex.className = 'uvreading';
+   
     // create elements to hold each weather detail
     var currentContainerEl = document.createElement("div");
     currentContainerEl.className = "stats";
@@ -204,10 +206,19 @@ function getLocationForecast(searchLocation) {
       "<p class='wind'>Wind: " + currentWind + " KPH</p>";
     var humidityCurrentEl = document.createElement("p");
     humidityCurrentEl.innerHTML =
-      "<p class=humidity'>Humidity: " + currentHumidity + "%</p>";
+      "<p class='humidity'>Humidity: " + currentHumidity + "%</p>";
     var uviCurrentEl = document.createElement("p");
+      // if (parseFloat(currentUVIndex) <=2) {
+      //   currentUVIndex.ClassName = "uvreading favorable";
+      // } else if (parseFloat(currentUVIndex) >= 3 && currentUVIndex <= 5) {
+      //   currentUVIndex.ClassName = "uvreading moderate";
+      // } else if (parseFloat(currentUVIndex) >=6 && currentUVIndex <= 8) {
+      //   currentUVIndex.ClassName = "uvreading high";
+      // } else if (parseFloat(currentUVIndex) > 10) {
+      //   currentUVIndex.ClassName = "uvreading severe";
+      // }; 
     uviCurrentEl.innerHTML =
-      "<p class=uvi'> UV Index: " + currentUVIndex + "</p>";
+    "<p class='uvi'> UV Index: " + currentUVIndex + "</p>";
 
     tempEl.appendChild(tempCurrentEl);
     statisticsEl.appendChild(tempEl);
@@ -222,7 +233,8 @@ function getLocationForecast(searchLocation) {
   var displayFutureForecast = function (futureForecastData) {
 
     // display upcoming 5 day forecast - this sets up the divs for each day's forecast information
-    var fiveDayContainerEl = document.querySelector("#five-day-container");
+    // fix for loop coding in 'weather back-up-1.js' file to replace below coding
+   
     var dayOneEl = document.querySelector("#day1");
     var dayTwoEl = document.querySelector("#day2");
     var dayThreeEl = document.querySelector("#day3");
@@ -428,37 +440,12 @@ function getLocationForecast(searchLocation) {
     humidityFiveEl.appendChild(humidityDayFiveEl);
     dayFiveEl.appendChild(humidityFiveEl);
     fiveDayContainerEl.appendChild(dayFiveEl);
-
-
-     
+    
   };
 
-}
+};
 
 
-//   var createForecastItem = function (forecastDataObj) {
-//     var forecastDay1El = document.createElement("div");
-    
-//     forecastDay1El.className = "future-list-item";
-//     var forecastItemDateEl = document.createElement("li");
-//     console.log(forecastDataObj);
-//     
-//     var forecastDateEl = document.createElement("span");
-//     forecastDateEl.innerText = forecastDate;
-//     forecastItemDateEl.appendChild(forecastDateEl);
-
-//     forecastDay1El.appendChild(forecastItemDateEl);
-//       
-//     return forecastItemDateEl
-//   };
-
-  
-//   var displayFiveDayForecast = function (futureForecastData) {
-//     var forecastListEl = document.getElementById("day1-forecast");
-
-//     var newForecastItem = createForecastItem(futureForecastData[0]);
-//     forecastListEl.appendChild(newForecastItem);
-//   };
- 
-// // add event listener to location input
+// add event listener to location input
 inputLocationEl.addEventListener("submit", inputRequestHandler);
+// need to add function(?) to clear current and future containers when search or previous search buttons are clicked

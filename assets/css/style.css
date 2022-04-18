@@ -79,7 +79,7 @@ p {
   color: var(--dark);
   border: none;
   border-radius: 12px;
-  background-color: var(--secondard);
+  background-color: var(--secondary);
   }
   
 .search-btn:hover {
@@ -137,6 +137,27 @@ display: block;
 margin-left:0px;; 
 } 
 
+.uvreading {
+  height: 20px;
+  width: 20px;
+}
+
+.favorable {
+  background-color: green;
+}
+
+.moderate {
+  background-color: yellow;
+}
+
+.high {
+  background-color: orange;
+}
+
+.severe {
+  background-color: red;
+}
+
 .clearfix {
   clear: both;
 }
@@ -192,37 +213,13 @@ margin-left:0px;;
   margin-right: 10px;
   list-style: none;
 }     
-/* .future-list-item {
-  background-color: var(--dark);    
-  color: var(--primary);
-  font-weight: bold;
-  text-decoration: none;
-  /* width: 100x;
-  height: 300x; */
-  /* text-align: left; */
-  /* margin-right: 10px; */
-  /* list-style: none; 
-} */    
+
 .list-item:hover {
   background-color: var(--dark);
   color: var(--tertiary);
 }
 
-/* .status-icon {
-  padding: 2px 5px;
-  margin: 0 5px;
-  background-color: rgba(255,255,255, 1);
-  border-radius: var(--border-radius);
-}
 
-.icon-danger {
-  color: rgb(255, 70, 70);
-}
-
-.icon-success {
-  color: rgb(29, 153, 255);
-}
- */
 /* CARDS */
 .card {
   margin: 0 0 20px 0;
